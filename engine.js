@@ -1,4 +1,69 @@
-	
+	var bound =	function(pad,theta){
+		this.angle = theta;
+		this.pad = pad;
+	}
+
+	var calculate = {
+			'circle':{
+				'circle': function(ob0,ob1){
+					return ob0.r + ob1.r;
+				},
+				'rect': function(ob0,ob1){
+					return calculate['rect']['circle'](ob1,ob0);
+				},
+				'polygon': function(ob0,ob1){
+					return calculate['polygon']['circle'](ob1,ob0);
+				}
+			},
+			'rect':{
+				'circle': function(ob0,ob1){
+					near = Close(ob0,ob1.x,ob1.y);
+					return Math.sqrt(Math.pow((practice * Math.cos(near.angle - theta)),2) + Math.pow((near.pad + ob1.r),2));
+				},
+				'rect': function(ob0,ob1){
+					near0 = Close(ob0,ob1.cx['rect'](),ob1.cy['rect']());
+					near1 = Close(ob1,ob0.cx['rect'](),ob0.cy['rect']());
+					return Math.sqrt(Math.pow((practice * Math.cos(near0.angle - theta)),2) + Math.pow((near0.pad + near1.pad),2));
+				},
+				'polygon': function(ob0,ob1){
+					return calculate[ob1.kind][ob0.kind](ob1,ob0);
+				}
+			},
+			'polygon':{
+				'circle': function(ob0,ob1){
+				},
+				'rect': function(ob0,ob1){
+				},
+				'polygon': function(ob0,ob1){
+				}
+			}
+		}
+
+	function Close(ob0,cx1,cy1){		
+		cy0 = ob0.cy[ob0.kind]();
+		cx0 = ob0.cx[ob0.kind]();
+		i = 0;
+		var max = ob0.max;
+		ob0.bounds.forEach(function(bound) {
+    		angle = bound.angle
+    		var x = max * Math.sin(angle);
+    		var y = max * Math.cos(angle);
+    		normal = Math.sqrt(Math.pow(cy0 + y - cy1,2) + Math.pow(cx0 + x - cx1,2))
+
+			if (!i) best = normal + 1;
+			// if another < practice 
+			// resolve from center to corner of 2 best bounds
+			if (normal < best){
+				best = normal
+				which = i;
+			}
+			i++;
+		});
+
+		//return bound with smallest hypotenuse
+		return ob0.bounds[which];
+	}
+
 	var	Object = function(){
 		var self = this;
 		this.jump = true;
@@ -11,6 +76,29 @@
 		this.dom = '';
 		this.mass = 1;
 		this.kind;
+		this.rotation = 0;
+		this.bounds = [];
+		this.cy ={
+			'circle': function(){
+				return self.y;
+			},
+			'rect': function(){
+				return self.y + self.dom.height.baseVal.value/2;			
+			},
+			'polygon': function(){
+			}
+		}
+		this.cx ={
+			'circle': function(){
+				return self.x;
+			},
+			'rect': function(){
+				return self.x + self.dom.width.baseVal.value/2;			
+			},
+			'polygon': function(){
+			}
+		}
+
 		this.move = {
 			'circle': function(){
 				self.dom.setAttribute('cx',self.x);
@@ -21,17 +109,6 @@
 				self.dom.setAttribute('y',self.y);			
 			},
 			'polygon': function(){
-			}
-		}
-		this.get = {
-			'circle': function(theta){
-				return self.r;
-			},
-			'rect': function(theta){
-				//It'll never touch!!
-				return -100000000000000000;
-			},
-			'polygon': function(theta){
 			}
 		}
 		this.types = {
@@ -45,8 +122,17 @@
 				self.kind = 'rect';
 				self.x = self.dom.x.baseVal.value;
 				self.y = self.dom.y.baseVal.value;
-				self.cx = self.dom.x.baseVal.value + (self.dom.width.baseVal.value/2);
-				self.cy = self.dom.y.baseVal.value + (self.dom.height.baseVal.value/2);
+				padw = self.dom.width.baseVal.value/2;
+				padh = self.dom.height.baseVal.value/2;
+				self.bounds[0] = new bound(padw,Math.PI/2); //right
+				self.bounds[1] = new bound(padh,0); //top
+				self.bounds[2] = new bound(padw,(3*Math.PI)/2); //left
+				self.bounds[3] = new bound(padh,Math.PI); //bottom
+				if(padw>padh)
+					self.max=padw;
+				else
+					self.max=padh;
+				self.type = $(self.dom).data("type");
 			},
 			'polygon': function(){
 				i = self.dom.points.numberOfItems;
@@ -68,6 +154,7 @@
 				function triangle(p1,p2,p3){
 					//Test Enviroment
 	        		document.getElementById('vectors').appendChild(SVG('polygon', {points: +p1.x+','+p1.y+' '+p2.x+','+p2.y+' '+p3.x+','+p3.y, stroke: 'black', 'stroke-width': 2, fill: 'red'}));
+					//New Bounds
 				}
 				function SVG(tag, attrs) {
 	            	var el= document.createElementNS('http://www.w3.org/2000/svg', tag);
@@ -80,16 +167,21 @@
 			}
 		}
 	}
+	var scale = 1;
 	var polygons = 0;
 	var running = true;
-	var g = -9.81;
+	var g = -9.81 * scale;
 	var fps = 1000/50;
 	var Objects = []
-	var friction = 0.01;
+	var friction = 0.01 * scale;
 	var elasticity = 0.8;
 	var number = 0;
 	var tempnumber;
 	var main;
+	var theta;
+	var practice;
+	var deltax;
+	var deltay;
 
 	function error(msg){
 		throw { 
@@ -104,17 +196,17 @@
 		if(e.which == 38) {
 			if (!Objects[main].jump){ 		//Prevent double jump
 				Objects[main].jump = true;
-				Objects[main].vy = -10; //up
+				Objects[main].vy = -10 * scale; //up
 			}
 		}
 		if(e.which == 37) {
-			Objects[main].vx = -5; //left
+			Objects[main].vx = -5 * scale; //left
 	   	}
 	   	if(e.which == 39) {
-			Objects[main].vx = 5; //right
+			Objects[main].vx = 5 * scale; //right
 		}
 	   	if(e.which == 40) {
-			Objects[main].vy = 5; //down
+			Objects[main].vy = 5 * scale; //down
 		}
 	}
 
@@ -140,14 +232,24 @@ function start() {
 	animate();
 }
 
-function resolve(ob0,ob1){
-	alert('theory:'+theory+' practice:'+practice);
+function resolve(){
+	if(Objects[tempnumber2].type != "static"){
+		Objects[tempnumber2].vy -= deltay/fps;
+		Objects[tempnumber2].vx -= deltax/fps;
+	}else{
+		Objects[tempnumber].x -= deltax;
+		Objects[tempnumber].y -= deltay;
+	}
 }
 
 function examine(ob0,ob1){
-	var theta = Math.atan((ob0.y-ob1.y)/(ob0.x-ob1.x));
-	theory = ob0.get[ob0.kind](theta) + ob1.get[ob1.kind](theta);
-	practice = Math.sqrt(Math.pow((ob0.y-ob1.y),2) + Math.pow((ob0.x-ob1.x),2));
+	deltay = (ob0.cy[ob0.kind]()-ob1.cy[ob1.kind]());
+	deltax = (ob0.cx[ob0.kind]()-ob1.cx[ob1.kind]());
+	theta = Math.atan(deltay/deltax);
+	practice = Math.sqrt(Math.pow(deltay,2) + Math.pow(deltax,2));
+	theory = calculate[ob0.kind][ob1.kind](ob0,ob1);
+	//alert(theory+','+practice);
+
 	return practice < theory;
 }
 
@@ -205,11 +307,12 @@ function animate(){
 			//'Examine' looks whether touching
 			if(examine(Objects[tempnumber],Objects[tempnumber2]))
 				//If touching then Fix
-				resolve(Objects[tempnumber],Objects[tempnumber2]);
+				resolve();
 		
 		}while(tempnumber2--)
 		// So I heard these Whiles were faster
 
+		/*
 		//HTML5 Transition
 		if (Objects[tempnumber].x >= 500){
 			Objects[tempnumber].x = 0;
@@ -220,12 +323,12 @@ function animate(){
 				alert(e);
 			}
 			//Load new Elements
-			$('#wrapper').load('Level.html #vectors', function(){
+			$('#wrapper').load('index2.html #vectors', function(){
 				start();
 			});
 			//Kill old loop
 			running = false;		
-	  	}
+	  	}*/
 
 	}while(tempnumber--)
 
