@@ -16,7 +16,7 @@ end
 
 
 webrick_options = {
-  :Port               => 443,
+  :Port               => 80,
   :Logger             => WEBrick::Log::new($stderr, WEBrick::Log::DEBUG),
   :SSLEnable          => true,
   :SSLVerifyClient    => OpenSSL::SSL::VERIFY_NONE,
