@@ -2,7 +2,7 @@ require 'openssl'
 require 'sinatra'
 require 'rack/ssl'
 require 'pg'
-conn = PGconn.connect('ec2-23-21-89-65.compute-1.amazonaws.com', 5432, nil, nil, 'd66aimi70ef5kg', 'dtrodkftrfqyyg', 'Ye8IKyxUWHah2s6Ca_QZ0lbzkO')
+$conn = PGconn.connect('ec2-23-21-89-65.compute-1.amazonaws.com', 5432, nil, nil, 'd66aimi70ef5kg', 'dtrodkftrfqyyg', 'Ye8IKyxUWHah2s6Ca_QZ0lbzkO')
 
 
 #require 'data_mapper'
@@ -19,7 +19,7 @@ end
 
 def element(object,level)
   element = ''
-  res=conn.exec('select * from '+object+' where id=sandbox')
+  res=$conn.exec('select * from '+object+' where id=sandbox')
   rows = res.ntuples()
   fields = res.fields()
   (0...rows).each do |i|
