@@ -14,6 +14,6 @@ use Rack::SSL
 use Rack::Static, :urls => ['/static']
 get '/' do
   res=conn.exec('select * from main')
-  @elements = 'Hello World'
+  @elements = '<circle cx="0" cy="50" r="30" stroke="black" stroke-width="2" id="Main" fill="blue" />'
   erb:index
 end
