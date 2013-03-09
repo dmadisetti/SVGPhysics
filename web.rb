@@ -13,16 +13,7 @@ use Rack::SSL
 
 use Rack::Static, :urls => ['/static']
 get '/' do
-  test = ''
-  res=conn.exec('select * from main') do |result|
-    result.each do |row|
-      test += row
-    end
-  end
-  return test.to_s()
-
-def construct(object,level)
-	res=conn.exec('select * from'+object)
-end
-  #erb:index, locals: {level: res}
+  res=conn.exec('select * from main')
+  @elements = 'Hello World'
+  erb:index
 end
