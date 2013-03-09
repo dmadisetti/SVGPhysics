@@ -13,6 +13,6 @@ use Rack::SSL
 
 use Rack::Static, :urls => ['/static']
 get '/' do
-  res
+  res.getvalue(0,0)
   #erb:index
 end
