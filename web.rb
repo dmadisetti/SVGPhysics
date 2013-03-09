@@ -19,7 +19,7 @@ end
 
 def element(object,level)
   element = ''
-  res=$conn.exec('select * from '+object+' where id="sandbox"')
+  res=$conn.exec("select * from "+object+" where id='sandbox'")
   rows = res.ntuples()
   fields = res.fields()
   (0...rows).each do |i|
