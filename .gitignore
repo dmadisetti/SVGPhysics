@@ -1,0 +1,6 @@
+cert
+key
+Procfile
+.git
+*.bat
+sandbox.*
