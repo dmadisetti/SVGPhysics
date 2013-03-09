@@ -19,7 +19,7 @@ get '/' do
       test += row
     end
   end
-  return test
+  return test.to_s()
 
 def construct(object,level)
 	res=conn.exec('select * from'+object)
