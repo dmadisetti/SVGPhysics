@@ -13,8 +13,21 @@ use Rack::SSL
 
 use Rack::Static, :urls => ['/static']
 get '/' do
-  res=conn.exec('select * from main')
-  logger.info res
-  @elements = '<circle cx="0" cy="50" r="30" stroke="black" stroke-width="2" id="Main" fill="blue" />'
+  @elements = element('circle','sandbox')
   erb:index
+end
+
+def element(object,level)
+  element = ''
+  res=conn.exec('select * from '+object+' where id=sandbox')
+  rows = res.ntuples()
+  fields = res.fields()
+  (0...rows).each do |i|
+  	element += '<'+object
+  	(fields).each do |field|
+      element+=' '+feild+'="'+res[i][feild]+'"'
+    end
+    element += '/>'
+  end
+  return element
 end
