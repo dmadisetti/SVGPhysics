@@ -14,6 +14,7 @@ use Rack::SSL
 use Rack::Static, :urls => ['/static']
 get '/' do
   res=conn.exec('select * from main')
-  res.cmd_tuples()
+  num = res.cmd_tuples()
+  return num.to_s()
   #erb:index, locals: {level: res}
 end
