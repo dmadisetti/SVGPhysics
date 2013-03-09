@@ -4,7 +4,9 @@ require 'rack/ssl'
 require 'pg'
 conn = PGconn.connect('ec2-23-21-89-65.compute-1.amazonaws.com', 5432, '', '', 'd66aimi70ef5kg', 'dtrodkftrfqyyg', 'Ye8IKyxUWHah2s6Ca_QZ0lbzkO')
 res  = conn.exec('select * from main')
-print res
+puts hello
+puts res
+puts hello
 
 #require 'data_mapper'
 
