@@ -44,7 +44,7 @@ $(document).ready(function() {
 function start() {
 	number = 0;
 	$.each($('#vectors').children(),function(){
-		if (this.id == 'Main')
+		if (this.id == 'main')
 			main = number;
 		Objects[number] = new Object();
 		Objects[number].dom = this;
