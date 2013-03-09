@@ -25,7 +25,7 @@ def element(object,level)
   (0...rows).each do |i|
   	element += '<'+object
   	(fields).each do |field|
-      element+=' '+feild+'="'+res[i][feild]+'"'
+      element+=' '+field+'="'+res[i][field]+'"'
     end
     element += '/>'
   end
