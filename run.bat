@@ -1,1 +1,1 @@
-cmd /k ruby web.rb
+cmd /k ruby sandbox.rb

@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    pg (0.14.1-x86-mingw32)
     rack (1.5.2)
     rack-protection (1.4.0)
       rack
@@ -19,6 +20,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  pg
   rack-ssl
   rake
   rdoc
