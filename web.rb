@@ -19,15 +19,23 @@ end
 
 def element(object,level)
   element = ''
-  res=$conn.exec("select * from "+object+" where id='sandbox'")
+  res=$conn.exec("select * from "+object+" where class='sandbox'")
   rows = res.ntuples()
   fields = res.fields()
   (0...rows).each do |i|
   	element += '<'+object
   	(fields).each do |field|
-      element+=' '+field+'="'+res[i][field].to_s+'"'
+  	  if field == 'static' || field == 'src'
+        element+=' data-'+field+'="'+res[i][field].to_s+'"'
+      elsif field == 'main'
+        if res[i]['main']
+          element+=' id="main"'
+        end
+      else
+        element+=' '+field+'="'+res[i][field].to_s+'"'
+      end
     end
-    element += '/>'
+    element +='stroke="black" stroke-width="2" fill="blue"/>'
   end
   return element
 end
