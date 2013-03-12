@@ -25,7 +25,7 @@ def element(object,level)
   (0...rows).each do |i|
   	element += '<'+object
   	(fields).each do |field|
-  	  if field == 'static' || field == 'src'
+  	  if field == 'type' || field == 'src'
         element+=' data-'+field+'="'+res[i][field].to_s+'"'
       elsif field == 'main'
         if res[i]['main']
