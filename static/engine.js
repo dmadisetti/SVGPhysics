@@ -67,7 +67,7 @@ function resolve(){
 		Objects[tempnumber2].vx -= deltax/fps;
 	}else{
 		if (Objects[tempnumber2].kind == 'rect')
-			theta = near0.angle;
+			theta = Math.acos(Math.sin(near0.angle));
 		
 		if (Math.cos(theta) > 0 && Math.cos(theta) < Math.PI/2){
 			Objects[tempnumber].x += d * Math.cos(theta) + 1;
