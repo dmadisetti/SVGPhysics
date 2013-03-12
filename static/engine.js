@@ -60,8 +60,6 @@ function start() {
 }
 
 function resolve(){
-	alert(tempnumber2+','+which);
-	alert(practice+','+theory);
 	if(Objects[tempnumber2].type != "static"){
 		Objects[tempnumber2].vy -= deltay/fps;
 		Objects[tempnumber2].vx -= deltax/fps;

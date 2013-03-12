@@ -56,7 +56,6 @@ var	Object = function(){
 				p3 = polygon.points.getItem(--i);
 				triangle(p1,p2,p3);
 			}
-			alert('starting close');
 			if (i) triangle(p3,polygon.points.getItem(0),polygon.points.getItem(ii));
 			else if (ii - 2) triangle(p2,p3,polygon.points.getItem(ii));
 
