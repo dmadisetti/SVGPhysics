@@ -72,6 +72,8 @@ function resolve(){
 			Objects[tempnumber].y += d * Math.sin(theta) + 1;
 		else
 			Objects[tempnumber].y -= d * Math.sin(theta) - 1;
+		if (Objects[tempnumber2].kind == 'rect')
+			return;
 		vmag = Math.sqrt(Math.pow(Objects[tempnumber].vx,2) + Math.pow(Objects[tempnumber].vy,2));		
 		if (Math.sin(theta) > 0 && Math.sin(theta) < Math.PI/2){
 			Objects[tempnumber].vy = Math.sin(theta) * vmag * -1 * Objects[tempnumber2].elasticity;
