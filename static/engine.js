@@ -66,9 +66,8 @@ function resolve(){
 	}else{
 		if (Math.cos(theta) > 0 && Math.cos(theta) < Math.PI/2){
 			Objects[tempnumber].x += d * Math.cos(theta) + 1;
-		}else if(Math.cos(theta) < 0)
+		}else if(Math.cos(theta) < 0.1 && Math.cos(theta) > -0.1 )
 			Objects[tempnumber].x -= d * Math.cos(theta) - 1;
-		alert(Math.cos(theta));
 		if (Math.sin(theta) > 0 && Math.sin(theta) < Math.PI/2)
 			Objects[tempnumber].y += d * Math.sin(theta) + 1;
 		else if(Math.sin(theta) < 0)
