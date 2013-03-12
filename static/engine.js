@@ -64,13 +64,13 @@ function resolve(){
 		Objects[tempnumber2].vy -= deltay/fps;
 		Objects[tempnumber2].vx -= deltax/fps;
 	}else{
-		if (Math.cos(theta) > 0.1 && Math.cos(theta) < Math.PI/2 - 0.1){
+		if (Math.cos(theta) > 0 && Math.cos(theta) < Math.PI/2){
 			Objects[tempnumber].x += d * Math.cos(theta) + 1;
-		}else if(Math.cos(theta) < 0.1 && Math.cos(theta) > -0.1)
+		}else 
 			Objects[tempnumber].x -= d * Math.cos(theta) - 1;
-		if (Math.sin(theta) > 0.1 && Math.sin(theta) < Math.PI/2 - 0.1)
+		if (Math.sin(theta) > 0 && Math.sin(theta) < Math.PI/2)
 			Objects[tempnumber].y += d * Math.sin(theta) + 1;
-		else if(Math.sin(theta) < 0.1 && Math.sin(theta) > -0.1)
+		else
 			Objects[tempnumber].y -= d * Math.sin(theta) - 1;
 		if (Objects[tempnumber2].kind == 'rect')
 			return;
