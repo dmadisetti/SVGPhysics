@@ -15,6 +15,8 @@
 	var deltay;	// y change in practice
 	var d;
 	var which;
+	var near0;
+	var near1;
 
 document.onkeydown =function(e) {
 	if (!running)
@@ -64,6 +66,9 @@ function resolve(){
 		Objects[tempnumber2].vy -= deltay/fps;
 		Objects[tempnumber2].vx -= deltax/fps;
 	}else{
+		if (Objects[tempnumber2].kind == 'rect')
+			theta = near0.angle;
+		
 		if (Math.cos(theta) > 0 && Math.cos(theta) < Math.PI/2){
 			Objects[tempnumber].x += d * Math.cos(theta) + 1;
 		}else 
@@ -72,8 +77,6 @@ function resolve(){
 			Objects[tempnumber].y += d * Math.sin(theta) + 1;
 		else
 			Objects[tempnumber].y -= d * Math.sin(theta) - 1;
-		if (Objects[tempnumber2].kind == 'rect')
-			return;
 		vmag = Math.sqrt(Math.pow(Objects[tempnumber].vx,2) + Math.pow(Objects[tempnumber].vy,2));		
 		if (Math.sin(theta) > 0 && Math.sin(theta) < Math.PI/2){
 			Objects[tempnumber].vy = Math.sin(theta) * vmag * -1 * Objects[tempnumber2].elasticity;

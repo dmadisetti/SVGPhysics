@@ -12,8 +12,8 @@ var calculate = {
 	},
 	'rect':{
 		'circle': function(ob0,ob1){
-			near = Close(ob0,ob1.x,ob1.y);
-			return Math.sqrt(Math.pow((practice * Math.cos(near.angle - theta)),2) + Math.pow((near.pad + ob1.r),2));
+			near0 = Close(ob0,ob1.x,ob1.y);
+			return Math.sqrt(Math.pow((practice * Math.cos(near0.angle - theta)),2) + Math.pow((near0.pad + ob1.r),2));
 		},
 		'rect': function(ob0,ob1){
 			near0 = Close(ob0,ob1.cx(),ob1.cy());
