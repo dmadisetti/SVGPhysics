@@ -14,6 +14,7 @@ use Rack::SSL
 use Rack::Static, :urls => ['/static']
 get '/' do
   @elements = element('circle','sandbox')
+  @elements += element('rect','sandbox')
   erb:index
 end
 
