@@ -44,7 +44,7 @@ $(document).ready(function() {
 function start() {
 	number = 0;
 	$.each($('#vectors').children(),function(){
-		if (this.attr("data-type") == 'main')
+		if ($(this).attr("data-type") == 'main')
 			main = number;
 		Objects[number] = new Object();
 		Objects[number].dom = this;
