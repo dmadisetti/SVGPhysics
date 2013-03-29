@@ -2,7 +2,7 @@ require 'openssl'
 require 'sinatra'
 require 'rack/ssl'
 require 'pg'
-$conn = PGconn.connect('ec2-23-21-89-65.compute-1.amazonaws.com', 5432, nil, nil, 'd66aimi70ef5kg', 'dtrodkftrfqyyg', 'Ye8IKyxUWHah2s6Ca_QZ0lbzkO')
+$conn = PGconn.connect('ec2-54-243-137-0.compute-1.amazonaws.com', 5432, nil, nil, 'ddpl842se5qjjt', 'sukikabaqwhkeh', 'F-nDfTpy7QS5VJWidFd7K0W_3D')
 
 
 #require 'data_mapper'
