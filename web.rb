@@ -2,18 +2,17 @@ require 'openssl'
 require 'sinatra'
 require 'rack/ssl'
 require 'pg'
-$conn = PGconn.connect('ec2-54-243-137-0.compute-1.amazonaws.com', 5432, nil, nil, 'ddpl842se5qjjt', 'sukikabaqwhkeh', 'F-nDfTpy7QS5VJWidFd7K0W_3D')
+$conn = PGconn.connect('ec2-54-243-137-0.compute-1.amazonaws.com', 5432, nil, nil, 'db', 'user', 'pass')
 
 
-#require 'data_mapper'
-
-#DataMapper.setup(:default, ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
 use Rack::SSL
 
 use Rack::Static, :urls => ['/static']
 get '/' do
+  # Get Circle tags
   @elements = element('circle','sandbox')
+  #Get Rect tags
   @elements += element('rect','sandbox')
   erb:index
 end
@@ -21,7 +20,7 @@ end
 
 def element(object,level)
   element = ''
-  res=$conn.exec("select * from "+object+" where class='sandbox'")
+  res=$conn.exec("select * from "+object+" where class='"+level+"'")
   rows = res.ntuples()
   fields = res.fields()
   (0...rows).each do |i|
