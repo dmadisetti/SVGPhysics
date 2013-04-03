@@ -23,6 +23,7 @@ def element(object,level)
   element = ''
   res=$conn.exec("select * from "+object+" where class='sandbox'")
   rows = res.ntuples()
+  puts "testing"
   fields = res.fields()
   (0...rows).each do |i|
   	element += '<'+object
