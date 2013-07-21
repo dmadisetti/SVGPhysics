@@ -1,3 +1,4 @@
+	var container = document.querySelector('#wrapper');
 	var scale = 1;
 	var polygons = 0;
 	var running = true;
@@ -7,6 +8,20 @@
 	var friction = 0;
 	var elasticity = 0.8;
 	var number = 0;
+	var req = new XMLHttpRequest();
+	req.onload = function(data){
+		data.addEventListener("load",function(){
+	            chiles = vectors.contentDocument; //get the inner DOM of alpha.svg
+	            number = chiles.length;
+				for (var i = 0; i < number; i++) {
+					Objects[i] = assignObject(chiles[i]);
+					if (Objects[i].type == 'main') main = Objects[i];
+				};
+	    		running = true;
+				animate();
+	    },false);
+		container.innerHTML = data;
+	}
 	var tempnumber;
 	var main;
 	var theta;
@@ -28,21 +43,6 @@ document.onkeydown = function(e) {
 	if(e.which == 37) main.vx = -5 * scale; //left
    	if(e.which == 39) main.vx = 5 * scale; //right
    	if(e.which == 40) main.vy = 5 * scale; //down
-}
-
-
-function start() {
-	vectors = document.querySelector('#vectors');
-	vectors.addEventListener("load",function(){
-            chiles = vectors.contentDocument; //get the inner DOM of alpha.svg
-            number = chiles.length;
-			for (var i = 0; i < number; i++) {
-				Objects[i] = assignObject(chiles[i]);
-				if (Objects[i].type == 'main') main = Objects[i];
-			};
-    		running = true;
-			animate();
-    },false);
 }
 
 function resolve(){
@@ -151,7 +151,7 @@ function animate(){
 
 		
 		//HTML5 Transition
-		if (object.y >= 1500){
+/*		if (object.y >= 1500){
 			object.y = 0;
 			try{
 				//Transtion to different page
@@ -166,7 +166,7 @@ function animate(){
 			//Kill old loop
 			running = false;		
 	  	}
-
+*/
 	}while(tempnumber--)
 
 	// Get current Time
@@ -192,4 +192,5 @@ function error(msg){
 	} 
 }
 
-start();
+req.open("GET", "/sandbox.svg", true);
+req.send();
