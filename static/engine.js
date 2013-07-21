@@ -13,30 +13,21 @@
 	var practice;
 	var deltax;	// x change in practice
 	var deltay;	// y change in practice
-	var d;
 	var which;
 	var near0;
 	var near1;
+	var object,other;
 
-document.onkeydown =function(e) {
-	if (!running)
-		return;
-	if(e.which == 38) {
-		if (Objects[main].vy == 0){ 		//Prevent double jump
-			//Objects[main].jump = true;
-			Objects[main].vy = -10 * scale; //up
-			Objects[main].y -= 1;
-		}
+document.onkeydown = function(e) {
+	if (!running) return;
+	if(e.which == 38) 
+	if (main.vy == 0){ 		//Prevent double jump
+			main.vy = -10 * scale; //up
+			main.y -= 1;
 	}
-	if(e.which == 37) {
-		Objects[main].vx = -5 * scale; //left
-   	}
-   	if(e.which == 39) {
-		Objects[main].vx = 5 * scale; //right
-	}
-   	if(e.which == 40) {
-		Objects[main].vy = 5 * scale; //down
-	}
+	if(e.which == 37) main.vx = -5 * scale; //left
+   	if(e.which == 39) main.vx = 5 * scale; //right
+   	if(e.which == 40) main.vy = 5 * scale; //down
 }
 
 $(document).ready(function() {
@@ -44,46 +35,39 @@ $(document).ready(function() {
 });
 
 function start() {
-	number = 0;
-	$.each($('#vectors').children(),function(){
-		if ($(this).attr("data-type") == 'main')
-			main = number;
-		Objects[number] = new Object();
-		Objects[number].dom = this;
-		try{
-			Objects[number++].types[this.tagName]();
-		}catch(er){
-			error('SVG Platform Engine only supports circle,rect and polygon tags.');
-		}
-	});
-	number--;
+	chiles = document.querySelector('#vectors').children.length;
+	number = chiles.length;
+	for (var i = 0; i < number; i++) {
+		Objects[i] = assignObject(chiles[i]);
+		if (Objects[i].type == 'main') main = Objects[i];
+	};
 	running = true;
 	animate();
 }
 
 function resolve(){
-	if(Objects[tempnumber2].type != "static"){
-		Objects[tempnumber2].vy -= deltay/fps;
-		Objects[tempnumber2].vx -= deltax/fps;
+	if(other.type != "static"){
+		other.vy -= deltay/fps;
+		other.vx -= deltax/fps;
 	}else{
-		if (Objects[tempnumber2].kind == 'rect')
+		if (other.kind == 'rect')
 			theta = Math.acos(Math.sin(near0.angle));
 		
 		if (Math.cos(theta) > 0 && Math.cos(theta) < Math.PI/2){
-			Objects[tempnumber].x += d * Math.cos(theta) + 1;
+			object.x += d * Math.cos(theta) + 1;
 		}else 
-			Objects[tempnumber].x -= d * Math.cos(theta) - 1;
+			object.x -= d * Math.cos(theta) - 1;
 		if (Math.sin(theta) > 0 && Math.sin(theta) < Math.PI/2)
-			Objects[tempnumber].y += d * Math.sin(theta) + 1;
+			object.y += d * Math.sin(theta) + 1;
 		else
-			Objects[tempnumber].y -= d * Math.sin(theta) - 1;
-		vmag = Math.sqrt(Math.pow(Objects[tempnumber].vx,2) + Math.pow(Objects[tempnumber].vy,2));		
+			object.y -= d * Math.sin(theta) - 1;
+		vmag = Math.sqrt(Math.pow(object.vx,2) + Math.pow(object.vy,2));		
 		if (Math.sin(theta) > 0 && Math.sin(theta) < Math.PI/2){
-			Objects[tempnumber].vy = Math.sin(theta) * vmag * -1 * Objects[tempnumber2].elasticity;
-			Objects[tempnumber].vx += Math.cos(theta) * vmag * -1;
+			object.vy = Math.sin(theta) * vmag * -1 * other.elasticity;
+			object.vx += Math.cos(theta) * vmag * -1;
 		}else if (Math.sin(theta) != 0 && Math.sin(theta) != Math.PI/2){ 
-			Objects[tempnumber].vy = Math.sin(theta) * vmag * Objects[tempnumber2].elasticity;
-			Objects[tempnumber].vx += Math.cos(theta) * vmag;
+			object.vy = Math.sin(theta) * vmag * other.elasticity;
+			object.vx += Math.cos(theta) * vmag;
 		}
 	}
 }
@@ -93,7 +77,7 @@ function examine(ob0,ob1){
 	deltax = (ob0.cx()-ob1.cx());
 	theta = Math.atan(deltay/deltax);
 	practice = Math.sqrt(Math.pow(deltay,2) + Math.pow(deltax,2));
-	theory = calculate[ob0.kind][ob1.kind](ob0,ob1);
+	theory = calculate[ob0.type][ob1.type](ob0,ob1);
 	d = practice - theory;
 	return d;
 }
@@ -104,30 +88,25 @@ function animate(){
 	var d = new Date();
 	var then = d.getTime();
 
-
-
 	tempnumber = number;	
+
 	do{
+
+		object = Objects[tempnumber];
+
 		// Move every moveable object
-	if(Objects[tempnumber].type == 'static')
-		continue;
-
-		console.log(Objects[tempnumber].x);
-		console.log(Objects[tempnumber].y);
-
-
-		//Push to temp var for optimazation
-		var ob = Objects[tempnumber];
+		if(object.type == 'static')
+			continue;
 
 		// Move from last calcuation. Step behind for collision calculations
-		ob.move();
+		object.move();
 
 		//Acceleration due to gravity
-		Objects[tempnumber].vy -= g/fps;
+		object.vy -= g/fps;
 		
 		// Move x and y for next iteration
-		Objects[tempnumber].x += Objects[tempnumber].vx;
-		Objects[tempnumber].y += Objects[tempnumber].vy;
+		object.x += object.vx;
+		object.y += object.vy;
 		
 		//Baseline. Quick fix until full collision
 		/*if (Objects[tempnumber].y >= 200){
@@ -146,32 +125,34 @@ function animate(){
 		tempnumber2 = number;
 
 		do{
+
 			// Prevents comparing against self
 			if (tempnumber == tempnumber2)
 				continue;
 			//'Examine' looks whether touching
-			if(examine(Objects[tempnumber],Objects[tempnumber2]) < 0)
+			other = Objects[tempnumber2];
+			if(examine(object,other) < 0)
 				//If touching then Fix
-				resolve();
+				resolve(object,other);
 		
 		}while(tempnumber2--)
 		// So I heard these Whiles were faster
 
 		// If moving that slow then just Stop
-		if (Objects[tempnumber].vx >= -0.1 * scale && Objects[tempnumber].vx <= 0.1 * scale)
-			Objects[tempnumber].vx = 0;
-		if (Objects[tempnumber].vy >= -0.4 * scale && Objects[tempnumber].vy <= 0.4 * scale){
-				Objects[tempnumber].vy = 0;
-				if (ob.vx > 0)
-					Objects[tempnumber].vx += friction * (ob.mass * g);
-				else if (ob.vx < 0)
-					Objects[tempnumber].vx -= friction * (ob.mass * g);
+		if (object.vx >= -0.1 * scale && object.vx <= 0.1 * scale)
+			object.vx = 0;
+		if (object.vy >= -0.4 * scale && object.vy <= 0.4 * scale){
+				object.vy = 0;
+				if (object.vx > 0)
+					object.vx += friction * (object.mass * g);
+				else if (object.vx < 0)
+					object.vx -= friction * (object.mass * g);
 		}
 
 		
 		//HTML5 Transition
-		if (Objects[tempnumber].y >= 1500){
-			Objects[tempnumber].y = 0;
+		if (object.y >= 1500){
+			object.y = 0;
 			try{
 				//Transtion to different page
 				history.pushState({path:'/'}, 'Next Level', '/');
