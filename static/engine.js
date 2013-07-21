@@ -36,7 +36,7 @@ function start() {
 	chiles = document.querySelector('#vectors').childNodes;
 	number = chiles.length - 1;
 	for (var i = 0; i < number; i++) {
-		Objects[i] = assignObject(chiles[i]);
+		Objects[i] = assignShape(chiles[i]);
 		if (Objects[i].type == 'main') main = Objects[i];
 	};
 	running = true;
