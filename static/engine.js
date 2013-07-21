@@ -76,7 +76,7 @@ function examine(ob0,ob1){
 	deltax = (ob0.cx()-ob1.cx());
 	theta = Math.atan(deltay/deltax);
 	practice = Math.sqrt(Math.pow(deltay,2) + Math.pow(deltax,2));
-	theory = calculate[ob0.type][ob1.type](ob0,ob1);
+	theory = calculate[ob0.kind][ob1.kind](ob0,ob1);
 	d = practice - theory;
 	return d;
 }
