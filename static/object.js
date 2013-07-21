@@ -1,4 +1,5 @@
-var	Object = function(el){	
+Object =  function(){}
+Object.prototype._init = function(el){	
 	this.dom = el;
 	this.kind = el.tagName;
 	for(attibute in el.dataset) this[attibute] = el.dataset[attibute];
