@@ -3,6 +3,7 @@ Object.prototype._init = function(el){
 	this.dom = el;
 	this.kind = el.tagName;
 	for(attibute in el.dataset) this[attibute] = el.dataset[attibute];
+	this.init();
 }
 Object.prototype.jump = true;
 Object.prototype.x = 0;
@@ -56,10 +57,10 @@ Rect.init = function(el){
 		this.max=padh;
 	this.type = this.dom.dataset.type;
 }
-rect.cy = function(){
+Rect.cy = function(){
 	return self.y + self.dom.height.baseVal.value/2;			
 }
-rect.cx = function(){
+Rect.cx = function(){
 	return self.x + self.dom.width.baseVal.value/2;			
 }
 Rect.move = function(){
@@ -68,16 +69,19 @@ Rect.move = function(){
 }
 
 var ObjectList = function(el){
+	var ob;
 	switch(el.tagName){
 		case 'circle':
-			return new Circle(el);
+			ob = Circle(el);
 			break;
 		case 'rect':
-			return new Rect(el);
+			ob = Rect(el);
 			break;
 		default:
 			error('SVG Platform Engine only supports circle,rect and polygon tags.');
 	}
+	ob._init(el);
+	return ob;
 }
 
 var Bound =	function(pad,theta){
