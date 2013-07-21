@@ -23,7 +23,7 @@ Object.prototype.cy = function(){error("cy must be overriden")};
 Object.prototype.cx = function(){error("cx must be overriden")};
 Object.prototype.move = function(){error("Move must be overriden")};
 
-var Circle = new Object();
+var Circle.prototype = Object.prototype;
 Circle._init = function(el){
 	this.y = this.dom.cy.baseVal.value;
 	this.x = this.dom.cx.baseVal.value;
@@ -41,7 +41,7 @@ Circle.move = function(){
 }
 
 
-var Rect = new Object();
+var Rect.prototype = Object.prototype;
 Rect._init = function(el){
 	this.x = self.dom.x.baseVal.value;
 	this.y = self.dom.y.baseVal.value;
