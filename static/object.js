@@ -72,10 +72,10 @@ var assignObject = function(el){
 	var ob;
 	switch(el.tagName){
 		case 'circle':
-			ob = Circle(el);
+			ob = new Circle;
 			break;
 		case 'rect':
-			ob = Rect(el);
+			ob = new Rect;
 			break;
 		default:
 			error('SVG Platform Engine only supports circle,rect and polygon tags.');
