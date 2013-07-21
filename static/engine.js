@@ -30,9 +30,7 @@ document.onkeydown = function(e) {
    	if(e.which == 40) main.vy = 5 * scale; //down
 }
 
-$(document).ready(function() {
-	start();
-});
+
 
 function start() {
 	chiles = document.querySelector('#vectors').childNodes;
@@ -149,7 +147,7 @@ function animate(){
 					object.vx -= friction * (object.mass * g);
 		}
 
-		
+/*		
 		//HTML5 Transition
 		if (object.y >= 1500){
 			object.y = 0;
@@ -166,6 +164,7 @@ function animate(){
 			//Kill old loop
 			running = false;		
 	  	}
+*/
 
 	}while(tempnumber--)
 
@@ -191,3 +190,4 @@ function error(msg){
 	    htmlMessage: 'Please read API.' 
 	} 
 }
+start();
