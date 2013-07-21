@@ -2,7 +2,7 @@ require 'openssl'
 require 'sinatra'
 require 'rack/ssl'
 require 'pg'
-$conn = PGconn.connect('ec2-54-243-137-0.compute-1.amazonaws.com', 'ddpl842se5qjjt', 'sukikabaqwhkeh', 'F-nDfTpy7QS5VJWidFd7K0W_3D')
+$conn = PGconn.connect('ec2-54-243-137-0.compute-1.amazonaws.com', 5432, '', '', 'ddpl842se5qjjt', 'sukikabaqwhkeh', 'F-nDfTpy7QS5VJWidFd7K0W_3D')
 
 
 
