@@ -1,53 +1,53 @@
-Object =  function(){}
-Object.prototype.init = function(el){	
+Shape =  function(){}
+Shape.prototype.init = function(el){	
 	this.dom = el;
 	this.kind = el.tagName;
-	for(attibute in el.dataset) this[attibute] = el.dataset[attibute];
+	for(attribute in el.dataset) this[attribute] = el.dataset[attribute];
 	this._init(el);
 }
-Object.prototype.jump = true;
-Object.prototype.x = 0;
-Object.prototype.y = 0;
-Object.prototype.type = '';
-Object.prototype.vx = 0;
-Object.prototype.vy = 0;
-Object.prototype.frame = 0;
-Object.prototype.dom = '';
-Object.prototype.mass = 1;
-Object.prototype.kind = '';
-Object.prototype.elasticity = 0.5;
-Object.prototype.rotation = 0;
-Object.prototype.bounds = [];
-Object.prototype._init = function(){error("Init must be overriden")};
-Object.prototype.cy = function(){error("cy must be overriden")};
-Object.prototype.cx = function(){error("cx must be overriden")};
-Object.prototype.move = function(){error("Move must be overriden")};
+Shape.prototype.jump = true;
+Shape.prototype.x = 0;
+Shape.prototype.y = 0;
+Shape.prototype.type = '';
+Shape.prototype.vx = 0;
+Shape.prototype.vy = 0;
+Shape.prototype.frame = 0;
+Shape.prototype.dom = '';
+Shape.prototype.mass = 1;
+Shape.prototype.kind = '';
+Shape.prototype.elasticity = 0.5;
+Shape.prototype.rotation = 0;
+Shape.prototype.bounds = [];
+Shape.prototype._init = function(){error("Init must be overriden")};
+Shape.prototype.cy = function(){error("cy must be overriden")};
+Shape.prototype.cx = function(){error("cx must be overriden")};
+Shape.prototype.move = function(){error("Move must be overriden")};
 
 var Circle = function(){}
-Circle.prototype = new Object();
+Circle.prototype = new Shape();
 Circle.prototype._init = function(el){
 	this.y = this.dom.cy.baseVal.value;
 	this.x = this.dom.cx.baseVal.value;
 	this.r = this.dom.r.baseVal.value;
 }
 Circle.prototype.cy = function(){
-	return self.y;
+	return this.y;
 }
 Circle.prototype.cx = function(){
-	return self.x;
+	return this.x;
 }
 Circle.prototype.move = function(){
-	self.dom.setAttribute('cx',self.x);
-	self.dom.setAttribute('cy',self.y);
+	this.dom.setAttribute('cx',this.x);
+	this.dom.setAttribute('cy',this.y);
 }
 
 var Rect = function(){}
-Rect.prototype = new Object();
+Rect.prototype = new Shape();
 Rect.prototype._init = function(el){
-	this.x = self.dom.x.baseVal.value;
-	this.y = self.dom.y.baseVal.value;
-	padw = self.dom.width.baseVal.value/2;
-	padh = self.dom.height.baseVal.value/2;
+	this.x = this.dom.x.baseVal.value;
+	this.y = this.dom.y.baseVal.value;
+	padw = this.dom.width.baseVal.value/2;
+	padh = this.dom.height.baseVal.value/2;
 	this.bounds[0] = new Bound(padw,Math.PI/2); //right
 	this.bounds[1] = new Bound(padh,0); //top
 	this.bounds[2] = new Bound(padw,(3*Math.PI)/2); //left
@@ -59,17 +59,17 @@ Rect.prototype._init = function(el){
 	this.type = this.dom.dataset.type;
 }
 Rect.prototype.cy = function(){
-	return self.y + self.dom.height.baseVal.value/2;			
+	return this.y + this.dom.height.baseVal.value/2;			
 }
 Rect.prototype.cx = function(){
-	return self.x + self.dom.width.baseVal.value/2;			
+	return this.x + this.dom.width.baseVal.value/2;			
 }
 Rect.prototype.move = function(){
-	self.dom.setAttribute('x',self.x);
-	self.dom.setAttribute('y',self.y);			
+	this.dom.setAttribute('x',this.x);
+	this.dom.setAttribute('y',this.y);			
 }
 
-var assignObject = function(el){
+var assignShape = function(el){
 	var ob;
 	switch(el.tagName){
 		case 'circle':
@@ -91,13 +91,13 @@ var Bound =	function(pad,theta){
 	this.pad = pad;
 }
 /*
-var polygon = new Object();
+var polygon = new Shape();
 polygon.init = function(){
-	i = self.dom.points.numberOfItems;
+	i = this.dom.points.numberOfItems;
 	if (i <= 2) error('Require at least 3 points for Polygon');
 	i--;
 	ii = i;
-	polygon = Objects.pop().dom;
+	polygon = Shapes.pop().dom;
 	while((i + 1)/3 >= 1){
 		p1 = polygon.points.getItem(i);
 		p2 = polygon.points.getItem(--i);
