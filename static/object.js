@@ -18,32 +18,31 @@ Object.prototype.kind = '';
 Object.prototype.elasticity = 0.5;
 Object.prototype.rotation = 0;
 Object.prototype.bounds = [];
-Object.prototype._init = function(){error("Init must be overriden")};
-Object.prototype.cy = function(){error("cy must be overriden")};
-Object.prototype.cx = function(){error("cx must be overriden")};
-Object.prototype.move = function(){error("Move must be overriden")};
+Object._init = function(){error("Init must be overriden")};
+Object.cy = function(){error("cy must be overriden")};
+Object.cx = function(){error("cx must be overriden")};
+Object.move = function(){error("Move must be overriden")};
 
-var circle = new Object;
 var Circle = function(){}
-Circle.prototype = circle.prototype;
-Circle.prototype._init = function(el){
+Circle.prototype = new Object();
+Circle._init = function(el){
 	this.y = this.dom.cy.baseVal.value;
 	this.x = this.dom.cx.baseVal.value;
 	this.r = this.dom.r.baseVal.value;
 }
-Circle.prototype.cy = function(){
+Circle.cy = function(){
 	return self.y;
 }
-Circle.prototype.cx = function(){
+Circle.cx = function(){
 	return self.x;
 }
-Circle.prototype.move = function(){
+Circle.move = function(){
 	self.dom.setAttribute('cx',self.x);
 	self.dom.setAttribute('cy',self.y);
 }
 
 var Rect = function(){}
-Rect.prototype = Object.prototype;
+Rect.prototype = new Object();
 Rect._init = function(el){
 	this.x = self.dom.x.baseVal.value;
 	this.y = self.dom.y.baseVal.value;
