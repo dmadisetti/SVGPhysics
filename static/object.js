@@ -43,7 +43,7 @@ Circle.prototype.move = function(){
 
 var Rect = function(){}
 Rect.prototype = new Object();
-Rect._init = function(el){
+Rect.prototype._init = function(el){
 	this.x = self.dom.x.baseVal.value;
 	this.y = self.dom.y.baseVal.value;
 	padw = self.dom.width.baseVal.value/2;
@@ -58,13 +58,13 @@ Rect._init = function(el){
 		this.max=padh;
 	this.type = this.dom.dataset.type;
 }
-Rect.cy = function(){
+Rect.prototype.cy = function(){
 	return self.y + self.dom.height.baseVal.value/2;			
 }
-Rect.cx = function(){
+Rect.prototype.cx = function(){
 	return self.x + self.dom.width.baseVal.value/2;			
 }
-Rect.move = function(){
+Rect.prototype.move = function(){
 	self.dom.setAttribute('x',self.x);
 	self.dom.setAttribute('y',self.y);			
 }
