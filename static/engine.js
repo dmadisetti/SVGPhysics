@@ -30,9 +30,6 @@ document.onkeydown = function(e) {
    	if(e.which == 40) main.vy = 5 * scale; //down
 }
 
-$(document).ready(function() {
-	start();
-});
 
 function start() {
 	vectors = document.querySelector('#vectors');
@@ -43,10 +40,9 @@ function start() {
 				Objects[i] = assignObject(chiles[i]);
 				if (Objects[i].type == 'main') main = Objects[i];
 			};
+    		running = true;
+			animate();
     },false);
-
-	running = true;
-	animate();
 }
 
 function resolve(){
@@ -195,3 +191,5 @@ function error(msg){
 	    htmlMessage: 'Please read API.' 
 	} 
 }
+
+start();
