@@ -4,19 +4,19 @@ require 'rack/ssl'
 require 'pg'
 $conn = PGconn.connect('ec2-54-243-137-0.compute-1.amazonaws.com', 5432, '', '', 'ddpl842se5qjjt', 'sukikabaqwhkeh', 'F-nDfTpy7QS5VJWidFd7K0W_3D')
 
+
+
 use Rack::SSL
 
 use Rack::Static, :urls => ['/static']
-get '/:level.svg' do
-  # Get Circle tags
-  @elements = element('circle',:level)
-  #Get Rect tags
-  @elements += element('rect',:level)
-  erb:svg
-end
 get '/' do
+  # Get Circle tags
+  @elements = element('circle','sandbox')
+  #Get Rect tags
+  @elements += element('rect','sandbox')
   erb:index
 end
+
 
 def element(object,level)
   element = ''
