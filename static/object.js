@@ -1,9 +1,9 @@
 Object =  function(){}
-Object.prototype._init = function(el){	
+Object.prototype.init = function(el){	
 	this.dom = el;
 	this.kind = el.tagName;
 	for(attibute in el.dataset) this[attibute] = el.dataset[attibute];
-	this.init();
+	this._init();
 }
 Object.prototype.jump = true;
 Object.prototype.x = 0;
@@ -18,13 +18,13 @@ Object.prototype.kind = '';
 Object.prototype.elasticity = 0.5;
 Object.prototype.rotation = 0;
 Object.prototype.bounds = [];
-Object.prototype.init = function(){error("Init must be overriden")};
+Object.prototype._init = function(){error("Init must be overriden")};
 Object.prototype.cy = function(){error("cy must be overriden")};
 Object.prototype.cx = function(){error("cx must be overriden")};
 Object.prototype.move = function(){error("Move must be overriden")};
 
 var Circle = new Object();
-Circle.init = function(el){
+Circle._init = function(el){
 	this.y = this.dom.cy.baseVal.value;
 	this.x = this.dom.cx.baseVal.value;
 	this.r = this.dom.r.baseVal.value;
@@ -42,7 +42,7 @@ Circle.move = function(){
 
 
 var Rect = new Object();
-Rect.init = function(el){
+Rect._init = function(el){
 	this.x = self.dom.x.baseVal.value;
 	this.y = self.dom.y.baseVal.value;
 	padw = self.dom.width.baseVal.value/2;
@@ -68,7 +68,7 @@ Rect.move = function(){
 	self.dom.setAttribute('y',self.y);			
 }
 
-var ObjectList = function(el){
+var assignObject = function(el){
 	var ob;
 	switch(el.tagName){
 		case 'circle':
@@ -80,7 +80,7 @@ var ObjectList = function(el){
 		default:
 			error('SVG Platform Engine only supports circle,rect and polygon tags.');
 	}
-	ob._init(el);
+	ob.init(el);
 	return ob;
 }
 
