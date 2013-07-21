@@ -34,11 +34,12 @@ document.onkeydown = function(e) {
 
 function start() {
 	chiles = document.querySelector('#vectors').childNodes;
-	number = chiles.length - 1;
+	number = chiles.length;
 	for (var i = 0; i < number; i++) {
 		Objects[i] = assignShape(chiles[i]);
 		if (Objects[i].type == 'main') main = Objects[i];
 	};
+	number--;
 	running = true;
 	animate();
 }
@@ -91,6 +92,8 @@ function animate(){
 	do{
 
 		object = Objects[tempnumber];
+
+		console.log(object);
 
 		// Move every moveable object
 		if(object.kind == 'static')
