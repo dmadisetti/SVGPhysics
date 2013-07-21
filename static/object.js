@@ -25,18 +25,18 @@ Object.prototype.move = function(){error("Move must be overriden")};
 
 var Circle = function(){}
 Circle.prototype = Object.prototype;
-Circle._init = function(el){
+Circle.prototype._init = function(el){
 	this.y = this.dom.cy.baseVal.value;
 	this.x = this.dom.cx.baseVal.value;
 	this.r = this.dom.r.baseVal.value;
 }
-Circle.cy = function(){
+Circle.prototype.cy = function(){
 	return self.y;
 }
-Circle.cx = function(){
+Circle.prototype.cx = function(){
 	return self.x;
 }
-Circle.move = function(){
+Circle.prototype.move = function(){
 	self.dom.setAttribute('cx',self.x);
 	self.dom.setAttribute('cy',self.y);
 }
