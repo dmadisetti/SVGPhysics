@@ -3,7 +3,7 @@ Object.prototype.init = function(el){
 	this.dom = el;
 	this.kind = el.tagName;
 	for(attibute in el.dataset) this[attibute] = el.dataset[attibute];
-	this._init();
+	this._init(el);
 }
 Object.prototype.jump = true;
 Object.prototype.x = 0;
