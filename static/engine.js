@@ -93,10 +93,8 @@ function animate(){
 
 		object = Objects[tempnumber];
 
-		console.log(object);
-
 		// Move every moveable object
-		if(object.kind == 'static')
+		if(object.type == 'static')
 			continue;
 
 		// Move from last calcuation. Step behind for collision calculations
