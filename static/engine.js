@@ -35,12 +35,16 @@ $(document).ready(function() {
 });
 
 function start() {
-	chiles = document.querySelector('#vectors').children.length;
-	number = chiles.length;
-	for (var i = 0; i < number; i++) {
-		Objects[i] = assignObject(chiles[i]);
-		if (Objects[i].type == 'main') main = Objects[i];
-	};
+	vectors = document.querySelector('#vectors');
+	vectors.addEventListener("load",function(){
+            chiles = vectors.contentDocument; //get the inner DOM of alpha.svg
+            number = chiles.length;
+			for (var i = 0; i < number; i++) {
+				Objects[i] = assignObject(chiles[i]);
+				if (Objects[i].type == 'main') main = Objects[i];
+			};
+    },false);
+
 	running = true;
 	animate();
 }
