@@ -30,21 +30,19 @@ document.onkeydown = function(e) {
    	if(e.which == 40) main.vy = 5 * scale; //down
 }
 
-
+$(document).ready(function() {
+	start();
+});
 
 function start() {
-	vectors = document.querySelector('#vectors');
-	vectors.addEventListener("load",function(){
-			console.log(vectors);
-            chiles = vectors.contentDocument; //get the inner DOM of alpha.svg
-            number = chiles.length;
-			for (var i = 0; i < number; i++) {
-				Objects[i] = assignObject(chiles[i]);
-				if (Objects[i].type == 'main') main = Objects[i];
-			};
-    		running = true;
-			animate();
-    },false);
+	chiles = document.querySelector('#vectors').childNodes;
+	number = chiles.length;
+	for (var i = 0; i < number; i++) {
+		Objects[i] = assignObject(chiles[i]);
+		if (Objects[i].type == 'main') main = Objects[i];
+	};
+	running = true;
+	animate();
 }
 
 function resolve(){
@@ -193,4 +191,3 @@ function error(msg){
 	    htmlMessage: 'Please read API.' 
 	} 
 }
-start();
