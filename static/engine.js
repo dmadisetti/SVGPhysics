@@ -20,7 +20,7 @@ var scale = 1
 var req = new XMLHttpRequest();
 req.onload = function(data){
 	var matches = data.currentTarget.responseText.match(/<svg.*\/svg>/g) || ['No Level Matched'];	
-	document.querySelector('#vectors').innerHTML = matches[0];
+	document.querySelector('#wrapper').innerHTML = matches[0];
 	start();
 }
 
