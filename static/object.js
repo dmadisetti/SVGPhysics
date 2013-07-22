@@ -81,7 +81,6 @@ var assignShape = function(el){
 		default:
 			error('SVG Platform Engine only supports circle,rect and polygon tags.');
 	}
-	console.log(ob);
 	ob.init(el);
 	return ob;
 }

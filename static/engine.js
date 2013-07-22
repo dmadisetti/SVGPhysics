@@ -1,22 +1,29 @@
-	var scale = 1;
-	var polygons = 0;
-	var running = true;
-	var g = -9.81 * scale;
-	var fps = 1000/50;
-	var Objects = []
-	var friction = 0;
-	var elasticity = 0.8;
-	var number = 0;
-	var tempnumber;
-	var main;
-	var theta;
-	var practice;
-	var deltax;	// x change in practice
-	var deltay;	// y change in practice
-	var which;
-	var near0;
-	var near1;
-	var object,other;
+var scale = 1
+, running = true
+, g = -9.81 * scale
+, fps = 1000/50
+, Objects = []
+, friction = 0
+, elasticity = 0.8
+, number
+, main
+, theta
+, practice
+, deltax	// x change in practice
+. deltay	// y change in practice
+, which
+, near0
+, near1
+, object
+, other;
+
+var req = new XMLHttpRequest();
+req.onload = function(data){
+	var matches = data.currentTarget.responseText.match(/<svg.*\/svg>/g) || ['No Level Matched'];	
+	document.querySelector('#vectors').innerHTML = matches[0];
+	start();
+}
+
 
 document.onkeydown = function(e) {
 	if (!running) return;
@@ -87,7 +94,7 @@ function animate(){
 	var d = new Date();
 	var then = d.getTime();
 
-	tempnumber = number;	
+	var tempnumber = number;	
 
 	do{
 
@@ -121,18 +128,17 @@ function animate(){
 		}*/
 		
 		// For Nested while for Object Collsion
-		tempnumber2 = number;
+		var tempnumber2 = number;
 
 		do{
-
 			// Prevents comparing against self
-			if (tempnumber == tempnumber2)
-				continue;
-			//'Examine' looks whether touching
+			if (tempnumber == tempnumber2) continue;
+
+			// Set Global
 			other = Objects[tempnumber2];
-			if(examine(object,other) < 0)
-				//If touching then Fix
-				resolve(object,other);
+
+			// If "Touching" fix 
+			if(examine(object,other) < 0) resolve(object,other);
 		
 		}while(tempnumber2--)
 		// So I heard these Whiles were faster
@@ -147,8 +153,7 @@ function animate(){
 				else if (object.vx < 0)
 					object.vx -= friction * (object.mass * g);
 		}
-
-/*		
+		
 		//HTML5 Transition
 		if (object.y >= 1500){
 			object.y = 0;
@@ -159,13 +164,12 @@ function animate(){
 				alert(e);
 			}
 			//Load new Elements
-			$('#wrapper').load('/ #vectors', function(){
-				start();
-			});
+			req.open("GET", "/", true);
+			req.send();
 			//Kill old loop
 			running = false;		
 	  	}
-*/
+
 
 	}while(tempnumber--)
 
@@ -174,7 +178,7 @@ function animate(){
 	var now = d.getTime();
 
 	//Adjust next call for time elapsed
-	delay = fps - now + then;
+	var delay = fps - now + then;
 	if(delay < 0)
 		delay = 0;
 
