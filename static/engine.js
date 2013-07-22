@@ -10,7 +10,7 @@ var scale = 1
 , theta
 , practice
 , deltax	// x change in practice
-. deltay	// y change in practice
+, deltay	// y change in practice
 , which
 , near0
 , near1
