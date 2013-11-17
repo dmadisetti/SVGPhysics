@@ -115,7 +115,7 @@ function resolve(ob,ob1,side){
 		// Only applies if 2 movables
 		split = 1 - split;
 	}
-	if(ob1.type != "static")
+	if(ob1.type != "static"){
 		ob1.x -= x * split;
 		ob1.y -= y * split;
 		ob1.vx -= vx * split;
