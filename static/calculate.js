@@ -68,7 +68,7 @@ function close(ob,ob1){
 	, y = ob.cy()-ob1.cy();
 	ob.bounds.forEach(function(bound) {
 		// Rotate and pad
-		console.log([x,y]);
+		console.log([ob.cx(),ob1.cx()]);
 		yPrime = x*Math.sin(bound.angle) + y*Math.cos(bound.angle);
 		console.log(yPrime);
 		yPrime -= bound.pad;
