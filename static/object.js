@@ -19,6 +19,7 @@ Shape.prototype.friction = 0.1;
 Shape.prototype.elasticity = 0.5;
 Shape.prototype.rotation = 0;
 Shape.prototype.bounds = [];
+Shape.prototype.points = [];
 Shape.prototype._init = function(){error("Init must be overriden")};
 Shape.prototype.cy = function(){error("cy must be overriden")};
 Shape.prototype.cx = function(){error("cx must be overriden")};
