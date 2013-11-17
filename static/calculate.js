@@ -85,10 +85,13 @@ function close(ob,ob1){
 	i = 0;
 	x = ob.pcx()-ob1.pcx();
 	y = ob.pcy()-ob1.pcy();
+	console.log([x,y]);
 	// Let's do it for the old guys
 	ob.bounds.forEach(function(bound) {
 		// Rotate and pad
+		
 		yPrime = x*Math.sin(bound.angle) + y*Math.cos(bound.angle);
+		console.log(yPrime);
 		yPrime -= bound.pad;
 		// if circle we're checking
 		// against edge and not vertice
