@@ -1,59 +1,124 @@
 var calculate = {
 	'circle':{
-		'circle': function(ob0,ob1){
-			return ob0.r + ob1.r;
+		'circle': function(ob,ob1){
+			dx = ob.cx()-ob1.cx();
+			dy = ob.cy()-ob1.cy();
+			offset = ob.r + ob1.r - Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
+			if(offset) resolve(ob,ob1,{'bound':{'angle':Math.atan(dy/dx)},'offset':-offset});
 		},
-		'rect': function(ob0,ob1){
-			return calculate['rect']['circle'](ob1,ob0);
+		'rect': function(ob,ob1){
+			return calculate['rect']['circle'](ob1,ob);
 		},
-		'polygon': function(ob0,ob1){
-			return calculate['polygon']['circle'](ob1,ob0);
+		'polygon': function(ob,ob1){
+			return calculate['polygon']['circle'](ob1,ob);
 		}
 	},
 	'rect':{
-		'circle': function(ob0,ob1){
-			near0 = Close(ob0,ob1.x,ob1.y);
-			return Math.sqrt(Math.pow((practice * Math.cos(near0.angle - theta)),2) + Math.pow((near0.pad + ob1.r),2));
+		'circle': function(ob,ob1){
+			close(ob,ob1).forEach(function(side) {
+				resolve(ob,ob1,side);
+			}
 		},
-		'rect': function(ob0,ob1){
-			near0 = Close(ob0,ob1.cx(),ob1.cy());
-			near1 = Close(ob1,ob0.cx(),ob0.cy());
-			return Math.sqrt(Math.pow((practice * Math.cos(near0.angle - theta)),2) + Math.pow((near0.pad + near1.pad),2));
+		'rect': function(ob,ob1){
+			ob.points.forEach(function(point) {
+				close(ob1,point).forEach(function(side) {
+					resolve(ob,ob1,side);
+				}
+			}
 		},
-		'polygon': function(ob0,ob1){
-			return calculate[ob1.kind][ob0.kind](ob1,ob0);
+		'polygon': function(ob,ob1){
+			// return calculate['polygon']['rect'](ob1,ob);
 		}
 	},
 	'polygon':{
-		'circle': function(ob0,ob1){
+		'circle': function(ob,ob1){
 		},
-		'rect': function(ob0,ob1){
+		'rect': function(ob,ob1){
+			ob.triangles.forEach(function(triangle) {
+				triangle.points.forEach(function(point) {
+					close(ob1,point).forEach(function(side) {
+						resolve(ob,ob1,side);
+					}
+				}
+			}
 		},
-		'polygon': function(ob0,ob1){
+		'polygon': function(ob,ob1){
+			ob.triangles.forEach(function(triangle) {
+				triangle.points.forEach(function(point) {
+					ob1.triangles.forEach(function(triangle1) {
+						triangle1.points.forEach(function(point1) {
+							close(ob1,point).forEach(function(side) {
+								resolve(ob,ob1,side);
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }
 
-function Close(ob0,cx1,cy1){		
-	cy0 = ob0.cy();
-	cx0 = ob0.cx();
-	i = 0;
-	var max = ob0.max;
-	ob0.bounds.forEach(function(bound) {
-		angle = bound.angle
-		var x = max * Math.sin(angle);
-		var y = max * Math.cos(angle);
-		normal = Math.sqrt(Math.pow(cy0 + y - cy1,2) + Math.pow(cx0 + x - cx1,2))
-		if (!i) best = normal + 1;
-		// if another < practice 
-		// resolve from center to corner of 2 best bounds
-		if (normal < best){
-			best = normal
-			which = i;
-		}
+function close(ob,ob1){
+	var yPrimes = []
+	, ruleBreakers = []
+	, i = 0
+	// Set origin to center
+	, x = ob.cx()-ob1.cx()
+	, y = ob.cy()-ob1.cy();
+	ob.bounds.forEach(function(bound) {
+		// Rotate and pad
+		yPrime = x*Math.sin(bound.angle) + y*Math.cos(bound.angle);
+		yPrime -= bound.pad;
+		// if circle we're checking
+		// against edge and not vertice
+		if(ob1.type == 'circle') yPrime -= r;
+		// since closed circut 
+		// all bounds must be violated
+		if (yPrime) return [];
+		// Hold on to these values
+		yPrimes[i] = yPrime;
 		i++;
 	});
-
+	i = 0;
+	x = ob.cx(true)-ob1.cx(true);
+	y = ob.cy(true)-ob1.cy(true);
+	// Let's do it for the old guys
+	ob.bounds.forEach(function(bound) {
+		// Rotate and pad
+		yPrime = x*Math.sin(bound.angle) + y*Math.cos(bound.angle);
+		yPrime -= bound.pad;
+		// if circle we're checking
+		// against edge and not vertice
+		if(ob1.type == 'circle') yPrime -= r;
+		// Where was the violation change?
+		if (yPrime) ruleBreakers[ruleBreakers.length] = {'bound':bound,'offset':yPrimes[i]};
+		i++;
+	});
 	//return bound with smallest hypotenuse
-	return ob0.bounds[which];
+	return ruleBreakers;
+}
+
+function resolve(ob,ob1,side){
+	var theta = side.bound.angle + Math.PI,
+	, x = Math.cos(theta) * -side.offset
+	, y = Math.sin(theta) * -side.offset
+	, vx = x/fps
+	, vy = y/fps
+	, split = (ob.type == "static" || ob.type == "static")
+	? 1
+	: ob1.mass/(ob.mass+ob1.mass);
+	if(ob.type != "static"){
+		ob.x += x * split;
+		ob.y += y * split;
+		ob.vx += vx * split;
+		ob.vy += vy * split;
+		// Only applies if 2 movables
+		split = 1 - split;
+	}
+	if(ob1.type != "static")
+		ob1.x -= x * split;
+		ob1.y -= y * split;
+		ob1.vx -= vx * split;
+		ob1.vy -= vy * split;
+	}
 }

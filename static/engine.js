@@ -52,6 +52,7 @@ function start() {
 }
 
 function resolve(){
+	ruleBreakers = calculate[object.kind][other.kind](object,other);
 	if(other.type != "static"){
 		other.vy -= deltay/fps;
 		other.vx -= deltax/fps;
@@ -78,16 +79,6 @@ function resolve(){
 	}
 }
 
-function examine(ob0,ob1){
-	deltay = (ob0.cy()-ob1.cy());
-	deltax = (ob0.cx()-ob1.cx());
-	theta = Math.atan(deltay/deltax);
-	practice = Math.sqrt(Math.pow(deltay,2) + Math.pow(deltax,2));
-	theory = calculate[ob0.kind][ob1.kind](ob0,ob1);
-	d = practice - theory;
-	return d;
-}
-
 
 function animate(){
 	// Get start time
@@ -109,7 +100,10 @@ function animate(){
 
 		//Acceleration due to gravity
 		object.vy -= g/fps;
-		
+
+		// Hold on to old values for resolution
+		object.px = object.x;
+		object.py = object.y;
 		// Move x and y for next iteration
 		object.x += object.vx;
 		object.y += object.vy;
@@ -137,8 +131,11 @@ function animate(){
 			// Set Global
 			other = Objects[tempnumber2];
 
+			// No reason to waste time 
+			if(object.type == "static" && other.type == "static") continue;
+
 			// If "Touching" fix 
-			if(examine(object,other) < 0) resolve(object,other);
+			calculate[object.type][other.type](object,other);
 		
 		}while(tempnumber2--)
 		// So I heard these Whiles were faster
@@ -147,11 +144,11 @@ function animate(){
 		if (object.vx >= -0.1 * scale && object.vx <= 0.1 * scale)
 			object.vx = 0;
 		if (object.vy >= -0.4 * scale && object.vy <= 0.4 * scale){
-				object.vy = 0;
-				if (object.vx > 0)
-					object.vx += friction * (object.mass * g);
-				else if (object.vx < 0)
-					object.vx -= friction * (object.mass * g);
+			object.vy = 0;
+			if (object.vx > 0)
+				object.vx += friction * (object.mass * g);
+			else if (object.vx < 0)
+				object.vx -= friction * (object.mass * g);
 		}
 		
 		//HTML5 Transition

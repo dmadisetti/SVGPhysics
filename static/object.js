@@ -52,17 +52,15 @@ Rect.prototype._init = function(el){
 	this.bounds[1] = new Bound(padh,0); //top
 	this.bounds[2] = new Bound(padw,(3*Math.PI)/2); //left
 	this.bounds[3] = new Bound(padh,Math.PI); //bottom
-			if(padw>padh)
-		this.max=padw;
-			else
-		this.max=padh;
+	if(padw>padh) this.max=padw;
+	else this.max=padh;
 	this.type = this.dom.dataset.type;
 }
-Rect.prototype.cy = function(){
-	return this.y + this.dom.height.baseVal.value/2;			
+Rect.prototype.cy = function(prev = false){
+	return (prev ? this.py : this.y) + this.dom.height.baseVal.value/2;
 }
-Rect.prototype.cx = function(){
-	return this.x + this.dom.width.baseVal.value/2;			
+Rect.prototype.cx = function(prev = false){
+	return (prev ? this.px : this.x) + this.dom.width.baseVal.value/2;
 }
 Rect.prototype.move = function(){
 	this.dom.setAttribute('x',this.x);
