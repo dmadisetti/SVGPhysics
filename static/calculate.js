@@ -90,7 +90,6 @@ function close(ob,ob1){
 		// Rotate and pad
 		
 		yPrime = x*Math.sin(bound.angle) + y*Math.cos(bound.angle);
-		console.log(yPrime);
 		yPrime -= bound.pad;
 		// if circle we're checking
 		// against edge and not vertice
@@ -104,7 +103,7 @@ function close(ob,ob1){
 }
 
 function resolve(ob,ob1,side){
-	var theta = side.bound.angle + Math.PI
+	var theta = side.bound.angle
 	, x = Math.cos(theta) * -side.offset
 	, y = Math.sin(theta) * -side.offset
 	, vx = x/fps
