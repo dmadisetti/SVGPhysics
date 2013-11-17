@@ -104,8 +104,8 @@ function close(ob,ob1){
 
 function resolve(ob,ob1,side){
 	var theta = side.bound.angle
-	, x = Math.cos(theta) * -side.offset
-	, y = Math.sin(theta) * -side.offset
+	, y = Math.cos(theta) * -side.offset
+	, x = Math.sin(theta) * -side.offset
 	, vx = x/fps
 	, vy = y/fps
 	, split = (ob.type == "static" || ob.type == "static")
