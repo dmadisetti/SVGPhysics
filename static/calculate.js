@@ -85,7 +85,6 @@ function close(ob,ob1){
 	i = 0;
 	x = ob.pcx()-ob1.pcx();
 	y = ob.pcy()-ob1.pcy();
-	console.log([x,y]);
 	// Let's do it for the old guys
 	ob.bounds.forEach(function(bound) {
 		// Rotate and pad
@@ -100,8 +99,6 @@ function close(ob,ob1){
 		if (yPrime >= 0) ruleBreakers[ruleBreakers.length] = {'bound':bound,'offset':yPrimes[i]};
 		i++;
 	});
-	console.log(ruleBreakers);
-	debugger;
 	//return bound with smallest hypotenuse
 	return ruleBreakers;
 }
@@ -115,6 +112,7 @@ function resolve(ob,ob1,side){
 	, split = (ob.type == "static" || ob.type == "static")
 	? 1
 	: ob1.mass/(ob.mass+ob1.mass);
+	debugger;
 	if(ob.type != "static"){
 		ob.x -= x * split;
 		ob.y -= y * split;
