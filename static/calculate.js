@@ -83,8 +83,8 @@ function close(ob,ob1){
 	});
 	if(end) return [];
 	i = 0;
-	x = ob.cx(true)-ob1.cx(true);
-	y = ob.cy(true)-ob1.cy(true);
+	x = ob.pcx()-ob1.pcx();
+	y = ob.pcy()-ob1.pcy();
 	// Let's do it for the old guys
 	ob.bounds.forEach(function(bound) {
 		// Rotate and pad
@@ -94,7 +94,7 @@ function close(ob,ob1){
 		// against edge and not vertice
 		if(ob1.type == 'circle') yPrime -= ob1.r;
 		// Where was the violation change?
-		if (yPrime > 0) ruleBreakers[ruleBreakers.length] = {'bound':bound,'offset':yPrimes[i]};
+		if (yPrime >= 0) ruleBreakers[ruleBreakers.length] = {'bound':bound,'offset':yPrimes[i]};
 		i++;
 	});
 	console.log(ruleBreakers);
