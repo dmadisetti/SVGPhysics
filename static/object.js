@@ -36,10 +36,10 @@ Circle.prototype.cy = function(){
 Circle.prototype.cx = function(){
 	return this.x;
 }
-Circle.prototype.cy = function(){
+Circle.prototype.pcy = function(){
 	return this.py;
 }
-Circle.prototype.cx = function(){
+Circle.prototype.pcx = function(){
 	return this.px;
 }
 Circle.prototype.move = function(){

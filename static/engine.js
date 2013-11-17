@@ -131,9 +131,6 @@ function animate(){
 			// Set Global
 			other = Objects[tempnumber2];
 
-			// No reason to waste time 
-			if(object.type == "static" && other.type == "static") continue;
-
 			// If "Touching" fix 
 			calculate[object.kind][other.kind](object,other);
 		
