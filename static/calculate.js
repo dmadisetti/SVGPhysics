@@ -99,7 +99,7 @@ function close(ob,ob1){
 }
 
 function resolve(ob,ob1,side){
-	var theta = side.bound.angle + Math.PI,
+	var theta = side.bound.angle + Math.PI
 	, x = Math.cos(theta) * -side.offset
 	, y = Math.sin(theta) * -side.offset
 	, vx = x/fps
