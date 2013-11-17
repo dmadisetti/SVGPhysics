@@ -101,18 +101,18 @@ function close(ob,ob1){
 
 function resolve(ob,ob1,side){
 	var theta = side.bound.angle + Math.PI
-	, x = Math.cos(theta) * side.offset
-	, y = Math.sin(theta) * side.offset
+	, x = Math.cos(theta) * -side.offset
+	, y = Math.sin(theta) * -side.offset
 	, vx = x/fps
 	, vy = y/fps
 	, split = (ob.type == "static" || ob.type == "static")
 	? 1
 	: ob1.mass/(ob.mass+ob1.mass);
 	if(ob.type != "static"){
-		ob.x += x * split;
-		ob.y += y * split;
-		ob.vx += vx * split;
-		ob.vy += vy * split;
+		ob.x -= x * split;
+		ob.y -= y * split;
+		ob.vx -= vx * split;
+		ob.vy -= vy * split;
 		// Only applies if 2 movables
 		split = 1 - split;
 	}
