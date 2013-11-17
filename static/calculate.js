@@ -62,7 +62,7 @@ var calculate = {
 function close(ob,ob1){
 	var yPrimes = []
 	, ruleBreakers = []
-	, end = false;
+	, end = false
 	, i = 0
 	// Set origin to center
 	, x = ob.cx()-ob1.cx()
