@@ -135,7 +135,7 @@ function animate(){
 			if(object.type == "static" && other.type == "static") continue;
 
 			// If "Touching" fix 
-			calculate[object.type][other.type](object,other);
+			calculate[object.kind][other.kind](object,other);
 		
 		}while(tempnumber2--)
 		// So I heard these Whiles were faster
