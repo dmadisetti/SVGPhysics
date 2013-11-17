@@ -95,7 +95,7 @@ function close(ob,ob1){
 		yPrime -= bound.pad;
 		// if circle we're checking
 		// against edge and not vertice
-		if(ob1.type == 'circle') yPrime -= r;
+		if(ob1.type == 'circle') yPrime -= ob1.r;
 		// Where was the violation change?
 		if (yPrime) ruleBreakers[ruleBreakers.length] = {'bound':bound,'offset':yPrimes[i]};
 		i++;

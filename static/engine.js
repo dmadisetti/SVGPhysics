@@ -69,6 +69,7 @@ function animate(){
 		// Move from last calcuation. Step behind for collision calculations
 		console.log([object.x,object.y])
 		object.move();
+		return;
 
 		//Acceleration due to gravity
 		object.vy -= g/fps;
