@@ -62,29 +62,26 @@ var calculate = {
 function close(ob,ob1){
 	var yPrimes = []
 	, ruleBreakers = []
+	, end = false;
 	, i = 0
 	// Set origin to center
 	, x = ob.cx()-ob1.cx()
 	, y = ob.cy()-ob1.cy();
 	ob.bounds.forEach(function(bound) {
 		// Rotate and pad
-		console.log([ob.cx(),ob1.cx()]);
 		yPrime = x*Math.sin(bound.angle) + y*Math.cos(bound.angle);
-		console.log(yPrime);
 		yPrime -= bound.pad;
-		console.log(yPrime);
-		console.log(bound.pad);
 		// if circle we're checking
 		// against edge and not vertice
 		if(ob1.type == 'circle') yPrime -= ob1.r;
 		// since closed circut 
 		// all bounds must be violated
-		if (yPrime > 0) return [];
+		if (yPrime > 0) end = true;
 		// Hold on to these values
 		yPrimes[i] = yPrime;
-		console.log(yPrime);
 		i++;
 	});
+	if(end) return;
 	i = 0;
 	x = ob.cx(true)-ob1.cx(true);
 	y = ob.cy(true)-ob1.cy(true);
