@@ -29,8 +29,8 @@ document.onkeydown = function(e) {
 	if (!running) return;
 	if(e.which == 38) 
 	if (-main.vy >= g - .05 && -main.vy <= g + .05){ 		//Prevent double jump
-			main.vy = -10 * scale; //up
-			main.y -= 1;
+			main.vy = -20 * scale; //up
+			main.y -= 5;
 	}
 	if(e.which == 37) main.vx = -5 * scale; //left
    	if(e.which == 39) main.vx = 5 * scale; //right
