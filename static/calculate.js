@@ -1,8 +1,8 @@
 var calculate = {
 	'circle':{
 		'circle': function(ob,ob1){
-			dx = ob.cx()-ob1.cx();
-			dy = ob.cy()-ob1.cy();
+			dx = ob1.cx()-ob.cx();
+			dy = ob1.cy()-ob.cy();
 			offset = 2*ob.r + ob1.r - Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
 			if(offset>0) resolve(ob,ob1,{'bound':{'angle':Math.atan(dy/dx)},'offset':-offset});
 		},
@@ -16,6 +16,7 @@ var calculate = {
 	'rect':{
 		'circle': function(ob,ob1){
 			close(ob,ob1).forEach(function(side) {
+				console.log('weird');
 				resolve(ob,ob1,side);
 			});
 		},
