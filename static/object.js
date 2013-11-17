@@ -15,6 +15,7 @@ Shape.prototype.frame = 0;
 Shape.prototype.dom = '';
 Shape.prototype.mass = 1;
 Shape.prototype.kind = '';
+Shape.prototype.friction = 0.1;
 Shape.prototype.elasticity = 0.5;
 Shape.prototype.rotation = 0;
 Shape.prototype.bounds = [];

@@ -111,7 +111,6 @@ function resolve(ob,ob1,side){
 	, split = (ob.type == "static" || ob.type == "static")
 	? 1
 	: ob1.mass/(ob.mass+ob1.mass);
-	debugger;
 	if(ob.type != "static"){
 		ob.x -= x * split;
 		ob.y -= y * split;
