@@ -75,9 +75,10 @@ function close(ob,ob1){
 		if(ob1.type == 'circle') yPrime -= r;
 		// since closed circut 
 		// all bounds must be violated
-		if (yPrime) return [];
+		if (yPrime > 0) return [];
 		// Hold on to these values
 		yPrimes[i] = yPrime;
+		console.log(yPrime);
 		i++;
 	});
 	i = 0;
