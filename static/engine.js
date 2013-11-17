@@ -51,35 +51,6 @@ function start() {
 	animate();
 }
 
-function resolve(){
-	ruleBreakers = calculate[object.kind][other.kind](object,other);
-	if(other.type != "static"){
-		other.vy -= deltay/fps;
-		other.vx -= deltax/fps;
-	}else{
-		if (other.kind == 'rect')
-			theta = Math.acos(Math.sin(near0.angle));
-		
-		if (Math.cos(theta) > 0 && Math.cos(theta) < Math.PI/2){
-			object.x += d * Math.cos(theta) + 1;
-		}else 
-			object.x -= d * Math.cos(theta) - 1;
-		if (Math.sin(theta) > 0 && Math.sin(theta) < Math.PI/2)
-			object.y += d * Math.sin(theta) + 1;
-		else
-			object.y -= d * Math.sin(theta) - 1;
-		vmag = Math.sqrt(Math.pow(object.vx,2) + Math.pow(object.vy,2));		
-		if (Math.sin(theta) > 0 && Math.sin(theta) < Math.PI/2){
-			object.vy = Math.sin(theta) * vmag * -1 * other.elasticity;
-			object.vx += Math.cos(theta) * vmag * -1;
-		}else if (Math.sin(theta) != 0 && Math.sin(theta) != Math.PI/2){ 
-			object.vy = Math.sin(theta) * vmag * other.elasticity;
-			object.vx += Math.cos(theta) * vmag;
-		}
-	}
-}
-
-
 function animate(){
 	// Get start time
 	var d = new Date();
