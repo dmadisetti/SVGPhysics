@@ -3,8 +3,7 @@ var calculate = {
 		'circle': function(ob,ob1){
 			dx = ob.cx()-ob1.cx();
 			dy = ob.cy()-ob1.cy();
-			// No radius?
-			offset = ob.r + ob1.r - Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
+			offset = 2*ob.r + ob1.r - Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
 			if(offset>0) resolve(ob,ob1,{'bound':{'angle':Math.atan(dy/dx)},'offset':-offset});
 		},
 		'rect': function(ob,ob1){
