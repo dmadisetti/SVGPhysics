@@ -68,10 +68,12 @@ function close(ob,ob1){
 	, y = ob.cy()-ob1.cy();
 	ob.bounds.forEach(function(bound) {
 		// Rotate and pad
+		console.log([x,y]);
 		yPrime = x*Math.sin(bound.angle) + y*Math.cos(bound.angle);
+		console.log(yPrime);
 		yPrime -= bound.pad;
 		console.log(yPrime);
-		console.log([ob,ob1]);
+		console.log(bound.pad);
 		// if circle we're checking
 		// against edge and not vertice
 		if(ob1.type == 'circle') yPrime -= ob1.r;
