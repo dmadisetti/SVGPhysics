@@ -94,7 +94,7 @@ function close(ob,ob1){
 		// against edge and not vertice
 		if(ob1.type == 'circle') yPrime -= ob1.r;
 		// Where was the violation change?
-		if (yPrime) ruleBreakers[ruleBreakers.length] = {'bound':bound,'offset':yPrimes[i]};
+		if (yPrime > 0) ruleBreakers[ruleBreakers.length] = {'bound':bound,'offset':yPrimes[i]};
 		i++;
 	});
 	console.log(ruleBreakers);
