@@ -3,7 +3,8 @@ var calculate = {
 		'circle': function(ob,ob1){
 			dx = ob.cx()-ob1.cx();
 			dy = ob.cy()-ob1.cy();
-			offset = ob.r + ob1.r - Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
+			// No radius?
+			offset = ob1.r - Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
 			if(offset>0) resolve(ob,ob1,{'bound':{'angle':Math.atan(dy/dx)},'offset':-offset});
 		},
 		'rect': function(ob,ob1){
@@ -100,8 +101,8 @@ function close(ob,ob1){
 
 function resolve(ob,ob1,side){
 	var theta = side.bound.angle + Math.PI
-	, x = Math.cos(theta) * -side.offset
-	, y = Math.sin(theta) * -side.offset
+	, x = Math.cos(theta) * side.offset
+	, y = Math.sin(theta) * side.offset
 	, vx = x/fps
 	, vy = y/fps
 	, split = (ob.type == "static" || ob.type == "static")
