@@ -73,7 +73,7 @@ function close(ob,ob1){
 		yPrime -= bound.pad;
 		// if circle we're checking
 		// against edge and not vertice
-		if(ob1.kinda == 'circle') yPrime -= ob1.r;
+		if(ob1.kind == 'circle') yPrime -= ob1.r;
 		// since closed circut 
 		// all bounds must be violated
 		if (yPrime > 0) end = true;
