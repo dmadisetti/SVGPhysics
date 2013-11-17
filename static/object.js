@@ -63,8 +63,10 @@ Rect.prototype._init = function(el){
 	this.bounds[1] = new Bound(padh,0); //top
 	this.bounds[2] = new Bound(padw,(3*Math.PI)/2); //left
 	this.bounds[3] = new Bound(padh,Math.PI); //bottom
-	if(padw>padh) this.max=padw;
-	else this.max=padh;
+	this.points[0] = new Point(0,0,this);
+	this.points[1] = new Point(padw * 2,0,this);
+	this.points[2] = new Point(0,padh * 2,this);
+	this.points[3] = new Point(padw * 2,padh * 2,this);
 	this.type = this.dom.dataset.type;
 }
 Rect.prototype.cy = function(){
@@ -83,6 +85,8 @@ Rect.prototype.move = function(){
 	this.dom.setAttribute('x',this.x);
 	this.dom.setAttribute('y',this.y);			
 }
+
+
 
 var assignShape = function(el){
 	var ob;
@@ -136,3 +140,23 @@ polygon.init = function(){
 	--number;
 }
 */
+
+Point = function(x,y,self){
+	this.x = x;
+	this.y = y;
+	this.py = y;
+	this.px = x;
+	this.self = self;
+}
+point.prototype.cy(){
+	return self.y + this.y;
+}
+point.prototype.cx(){
+	return self.x + this.x;	
+}
+point.prototype.pcy(){
+	return self.py + this.y;
+}
+point.prototype.pcx(){
+	return self.px + this.x;
+}
