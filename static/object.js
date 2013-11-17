@@ -148,15 +148,15 @@ Point = function(x,y,self){
 	this.px = x;
 	this.self = self;
 }
-point.prototype.cy(){
+point.prototype.cy = function(){
 	return self.y + this.y;
 }
-point.prototype.cx(){
+point.prototype.cx = function(){
 	return self.x + this.x;	
 }
-point.prototype.pcy(){
+point.prototype.pcy = function(){
 	return self.py + this.y;
 }
-point.prototype.pcx(){
+point.prototype.pcx = function(){
 	return self.px + this.x;
 }
