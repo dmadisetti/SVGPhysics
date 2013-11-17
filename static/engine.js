@@ -111,6 +111,7 @@ function animate(){
 		// So I heard these Whiles were faster
 
 		// If moving that slow then just Stop
+		/*
 		if (object.vx >= -0.1 * scale && object.vx <= 0.1 * scale)
 			object.vx = 0;
 		if (object.vy >= g/fps - .1 * scale && object.vy <= g/fps + .1 * scale){
@@ -120,7 +121,7 @@ function animate(){
 			else if (object.vx < 0)
 				object.vx -= friction * (object.mass * g);
 		}
-		
+		*/
 		//HTML5 Transition
 		if (object.y >= 1500){
 			object.y = 0;

@@ -111,6 +111,7 @@ function resolve(ob,ob1,side){
 	, split = (ob.type == "static" || ob.type == "static")
 	? 1
 	: ob1.mass/(ob.mass+ob1.mass);
+	mu = ((y < 1 && y > -1) && split == 1) * g
 	if(ob.type != "static"){
 		ob.x -= x * split;
 		ob.y -= y * split;
@@ -118,6 +119,12 @@ function resolve(ob,ob1,side){
 		ob.vy -= vy * split;
 		// Only applies if 2 movables
 		split = 1 - split;
+
+		// Apply teh friction
+		friction = mu * ob.mass * ob1.friction;
+		if (ob.vx > 3) ob.vx += friction;
+		else if (ob.vx < -3)	ob.vx -= friction;
+
 	}
 	if(ob1.type != "static"){
 		ob1.x -= x * split;
