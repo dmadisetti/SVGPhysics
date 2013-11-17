@@ -131,5 +131,10 @@ function resolve(ob,ob1,side){
 		ob1.y -= y * split;
 		ob1.vx -= vx * split;
 		ob1.vy -= vy * split;
+
+		// Apply teh friction
+		friction = mu * ob1.mass * ob.friction;
+		if (ob1.vx > 3) ob1.vx += friction;
+		else if (ob1.vx < -3)	ob1.vx -= friction;
 	}
 }
