@@ -17,13 +17,13 @@ var calculate = {
 		'circle': function(ob,ob1){
 			close(ob,ob1).forEach(function(side) {
 				resolve(ob,ob1,side);
-			}
+			});
 		},
 		'rect': function(ob,ob1){
 			ob.points.forEach(function(point) {
 				close(ob1,point).forEach(function(side) {
 					resolve(ob,ob1,side);
-				}
+				});
 			}
 		},
 		'polygon': function(ob,ob1){
@@ -38,9 +38,9 @@ var calculate = {
 				triangle.points.forEach(function(point) {
 					close(ob1,point).forEach(function(side) {
 						resolve(ob,ob1,side);
-					}
-				}
-			}
+					});
+				});
+			});
 		},
 		'polygon': function(ob,ob1){
 			ob.triangles.forEach(function(triangle) {
@@ -49,11 +49,11 @@ var calculate = {
 						triangle1.points.forEach(function(point1) {
 							close(ob1,point).forEach(function(side) {
 								resolve(ob,ob1,side);
-							}
-						}
-					}
-				}
-			}
+							});
+						});
+					});
+				});
+			});
 		}
 	}
 }

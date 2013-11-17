@@ -36,6 +36,12 @@ Circle.prototype.cy = function(){
 Circle.prototype.cx = function(){
 	return this.x;
 }
+Circle.prototype.cy = function(){
+	return this.py;
+}
+Circle.prototype.cx = function(){
+	return this.px;
+}
 Circle.prototype.move = function(){
 	this.dom.setAttribute('cx',this.x);
 	this.dom.setAttribute('cy',this.y);
@@ -56,11 +62,17 @@ Rect.prototype._init = function(el){
 	else this.max=padh;
 	this.type = this.dom.dataset.type;
 }
-Rect.prototype.cy = function(prev = false){
-	return (prev ? this.py : this.y) + this.dom.height.baseVal.value/2;
+Rect.prototype.cy = function(){
+	return this.y + this.dom.height.baseVal.value/2;			
 }
-Rect.prototype.cx = function(prev = false){
-	return (prev ? this.px : this.x) + this.dom.width.baseVal.value/2;
+Rect.prototype.cx = function(){
+	return this.x + this.dom.width.baseVal.value/2;			
+}
+Rect.prototype.pcy = function(){
+	return this.py + this.dom.height.baseVal.value/2;			
+}
+Rect.prototype.pcx = function(){
+	return this.px + this.dom.width.baseVal.value/2;			
 }
 Rect.prototype.move = function(){
 	this.dom.setAttribute('x',this.x);
