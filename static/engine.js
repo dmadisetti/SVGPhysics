@@ -27,10 +27,11 @@ req.onload = function(data){
 
 document.onkeydown = function(e) {
 	if (!running) return;
-	if(e.which == 38) 
+	if(e.which == 38){ 
 	if (-main.vy >= g - .05 && -main.vy <= g + .05){ 		//Prevent double jump
 			main.vy = -20 * scale; //up
 			main.y -= 5;
+	}
 	}
 	if(e.which == 37) main.vx = -5 * scale; //left
    	if(e.which == 39) main.vx = 5 * scale; //right
@@ -112,7 +113,7 @@ function animate(){
 		// If moving that slow then just Stop
 		if (object.vx >= -0.1 * scale && object.vx <= 0.1 * scale)
 			object.vx = 0;
-		if (object.vy >= -0.4 * scale && object.vy <= 0.4 * scale){
+		if (object.vy >= g/fps - .1 * scale && object.vy <= g/fps + .1 * scale){
 			object.vy = 0;
 			if (object.vx > 0)
 				object.vx += friction * (object.mass * g);
