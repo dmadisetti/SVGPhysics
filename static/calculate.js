@@ -95,6 +95,8 @@ function close(ob,ob1){
 		if (yPrime) ruleBreakers[ruleBreakers.length] = {'bound':bound,'offset':yPrimes[i]};
 		i++;
 	});
+	console.log(ruleBreakers);
+	debugger;
 	//return bound with smallest hypotenuse
 	return ruleBreakers;
 }
