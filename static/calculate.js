@@ -81,7 +81,7 @@ function close(ob,ob1){
 		yPrimes[i] = yPrime;
 		i++;
 	});
-	if(end) return;
+	if(end) return [];
 	i = 0;
 	x = ob.cx(true)-ob1.cx(true);
 	y = ob.cy(true)-ob1.cy(true);
