@@ -24,7 +24,7 @@ var calculate = {
 				close(ob1,point).forEach(function(side) {
 					resolve(ob,ob1,side);
 				});
-			}
+			});
 		},
 		'polygon': function(ob,ob1){
 			// return calculate['polygon']['rect'](ob1,ob);
