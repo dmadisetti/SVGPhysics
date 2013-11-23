@@ -65,9 +65,9 @@ Rect.prototype._init = function(el){
 	this.bounds[2] = new Bound(padw,(3*Math.PI)/2); //left
 	this.bounds[3] = new Bound(padh,Math.PI); //bottom
 	this.points[0] = new Point(0,0,this);
-	this.points[1] = new Point(padw * 2,0,this);
-	this.points[2] = new Point(0,padh * 2,this);
-	this.points[3] = new Point(padw * 2,padh * 2,this);
+	this.points[1] = new Point(padw * 4,0,this);
+	this.points[2] = new Point(0,padh * 4,this);
+	this.points[3] = new Point(padw * 4,padh * 4,this);
 	this.type = this.dom.dataset.type;
 }
 Rect.prototype.cy = function(){
