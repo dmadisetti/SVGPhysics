@@ -108,7 +108,7 @@ function resolve(ob,ob1,side){
 	, x = Math.sin(theta) * -side.offset
 	, vx = x/fps
 	, vy = y/fps
-	, split = (ob.type == "static" || ob.type == "static")
+	, split = (ob.type == "static" || ob1.type == "static")
 	? 1
 	: ob1.mass/(ob.mass+ob1.mass);
 	mu = ((y < 1 && y > -1) && split == 1) * g
