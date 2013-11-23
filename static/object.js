@@ -150,14 +150,14 @@ Point = function(x,y,self){
 	this.self = self;
 }
 Point.prototype.cy = function(){
-	return self.y + this.y;
+	return this.self.y + this.y;
 }
 Point.prototype.cx = function(){
-	return self.x + this.x;	
+	return this.self.x + this.x;	
 }
 Point.prototype.pcy = function(){
-	return self.py + this.y;
+	return this.self.py + this.y;
 }
 Point.prototype.pcx = function(){
-	return self.px + this.x;
+	return this.self.px + this.x;
 }
