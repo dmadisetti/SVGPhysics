@@ -33,9 +33,9 @@ document.onkeydown = function(e) {
 			main.y -= 5;
 	}
 	}
-	if(e.which == 37) main.vx = -5 * scale; //left
-   	if(e.which == 39) main.vx = 5 * scale; //right
-   	if(e.which == 40) main.vy = 5 * scale; //down
+	if(e.which == 37) main.x += -5 * scale; //left
+   	if(e.which == 39) main.x += 5 * scale; //right
+   	if(e.which == 40) main.y += 5 * scale; //down
 }
 
 
