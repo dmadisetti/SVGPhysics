@@ -127,10 +127,10 @@ function resolve(ob,ob1,side){
 		*/
 	}
 	if(ob1.type != "static"){
-		ob1.x -= x * split;
-		ob1.y -= y * split;
-		ob1.vx -= vx * split;
-		ob1.vy -= vy * split;
+		ob1.x += x * split;
+		ob1.y += y * split;
+		ob1.vx += vx * split;
+		ob1.vy += vy * split;
 
 		/*
 		// Apply teh friction
