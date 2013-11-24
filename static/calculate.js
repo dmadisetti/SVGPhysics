@@ -16,7 +16,6 @@ var calculate = {
 	'rect':{
 		'circle': function(ob,ob1){
 			close(ob,ob1).forEach(function(side) {
-				console.log('weird');
 				resolve(ob,ob1,side);
 			});
 		},
