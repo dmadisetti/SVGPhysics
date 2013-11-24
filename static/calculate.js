@@ -7,7 +7,9 @@ var calculate = {
 			if(offset>0) resolve(ob,ob1,{'bound':{'angle':Math.atan(dy/dx)},'offset':-offset});
 		},
 		'rect': function(ob,ob1){
-			return calculate['rect']['circle'](ob1,ob);
+			close(ob1,ob).forEach(function(side) {
+				resolve(ob,ob1,side);
+			});
 		},
 		'polygon': function(ob,ob1){
 			return calculate['polygon']['circle'](ob1,ob);
