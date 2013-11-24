@@ -33,11 +33,24 @@ document.onkeydown = function(e) {
 			main.y -= 5;
 	}
 	}
-	if(e.which == 37) main.x += -5 * scale; //left
-   	if(e.which == 39) main.x += 5 * scale; //right
-   	if(e.which == 40) main.y += 5 * scale; //down
+	if(e.which == 37) main.vx = -5 * scale; //left
+   	if(e.which == 39) main.vx = 5 * scale; //right
+   	// By rights redevelop Squat
+   	// if(e.which == 40) main.vy = 5 * scale; //down
 }
-
+document.onkeyup = function(e) {
+	if (!running) return;
+	if(e.which == 38){ 
+		if (-main.vy >= g - .05 && -main.vy <= g + .05){ 		//Prevent double jump
+				main.vy = -20 * scale; //up
+				main.y -= 5;
+		}
+	}
+	if(e.which == 37) main.vx = 0; //left
+   	if(e.which == 39) main.vx = 0; //right
+   	// By rights redevelop Squat
+   	//if(e.which == 40) main.vy = 0; //down
+}
 
 
 function start() {
