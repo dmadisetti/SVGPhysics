@@ -28,7 +28,7 @@ req.onload = function(data){
 document.onkeydown = function(e) {
 	if (!running) return;
 	if(e.which == 38)
-	if (main.x == main.px){ 		//Prevent double jump
+	if (main.y == main.py){	//Prevent double jump
 			main.vy = -20 * scale; //up
 			main.y -= 5;
 	}
