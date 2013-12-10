@@ -112,10 +112,15 @@ function resolve(ob,ob1,side){
 	, split = (ob.type == "static" || ob1.type == "static")
 	? 1
 	: ob1.mass/(ob.mass+ob1.mass);
+
+	// Store offender so we can solve all at once
+	ob.offenders[ob.offenders.length] = side;
+
 	mu = ((y < 1 && y > -1) && split == 1) * g
 	if(ob.type != "static"){
-		ob.x -= x * split;
-		ob.y -= y * split;
+		// Resolve inequalities all together to prevent weirdness
+		//ob.x -= x * split;
+		//ob.y -= y * split;
 		ob.vx -= vx * split;
 		ob.vy -= vy * split;
 		// Only applies if 2 movables
@@ -129,8 +134,9 @@ function resolve(ob,ob1,side){
 		*/
 	}
 	if(ob1.type != "static"){
-		ob1.x += x * split;
-		ob1.y += y * split;
+		// Moving other objects just causes weirdness
+		//ob1.x += x * split;
+		//ob1.y += y * split;
 		ob1.vx += vx * split;
 		ob1.vy += vy * split;
 
@@ -141,4 +147,30 @@ function resolve(ob,ob1,side){
 		else if (ob1.vx < -3)	ob1.vx -= friction;
 		*/
 	}
+}
+
+solve = function(){
+	offending = object.offenders.length;
+	switch(offending){
+		case 1:
+			var m0 = Math.tan(offending[0].bound.angle)
+			, m1 = -1/Math.tan(offending[0].bound.angle)
+			, x0 = 0
+			, x1 = Math.sin(offending[0].bound.angle) * -offending[0].offset
+			, y0 = 0
+			, y1 = Math.cos(offending[1].bound.angle) * -offending[1].offset;
+			break;
+		default:
+			var m0 = -1/Math.tan(offending[0].bound.angle)
+			, m1 = -1/Math.tan(offending[1].bound.angle)
+			, x0 = Math.sin(offending[0].bound.angle) * -offending[0].offset
+			, x1 = Math.sin(offending[1].bound.angle) * -offending[1].offset
+			, y0 = Math.cos(offending[0].bound.angle) * -offending[0].offset
+			, y1 = Math.cos(offending[1].bound.angle) * -offending[1].offset;
+			break;
+	}
+	var x = ((m1*x1+y1)-(m0*x0+y0))/(m0 - m1)
+	, y = m0*x + m0*x0 + y0;
+	object.x += x;
+	object.y += y;
 }

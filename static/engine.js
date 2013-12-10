@@ -79,17 +79,16 @@ function animate(){
 		if(object.type == 'static')
 			continue;
 
-		// Move from last calcuation. Step behind for collision calculations
-
-		object.move();
-
 		//Acceleration due to gravity
 		object.vy -= g/fps;
 
 		// Hold on to old values for resolution
 		object.px = object.x;
 		object.py = object.y;
-		// Move x and y for next iteration
+		// Alter velocities from previous forces
+		object.vx += object.dvx;
+		object.vy += object.dvy;
+		// Move x and y for solve
 		object.x += object.vx;
 		object.y += object.vy;
 		
@@ -122,18 +121,13 @@ function animate(){
 		}while(tempnumber2--)
 		// So I heard these Whiles were faster
 
-		// If moving that slow then just Stop
-		/*
-		if (object.vx >= -0.1 * scale && object.vx <= 0.1 * scale)
-			object.vx = 0;
-		if (object.vy >= g/fps - .1 * scale && object.vy <= g/fps + .1 * scale){
-			object.vy = 0;
-			if (object.vx > 0)
-				object.vx += friction * (object.mass * g);
-			else if (object.vx < 0)
-				object.vx -= friction * (object.mass * g);
-		}
-		*/
+		// Take care of our inequalities
+		calculate.solve();
+		object.offenders = [];
+
+		// Move now. The inequalities should be beautiful.
+		object.move();
+
 		//HTML5 Transition
 		if (object.y >= 1500){
 			object.y = 0;

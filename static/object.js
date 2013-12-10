@@ -1,5 +1,6 @@
 Shape =  function(){}
 Shape.prototype.init = function(el){	
+	this.offenders = [];
 	this.dom = el;
 	this.kind = el.tagName;
 	for(attribute in el.dataset) this[attribute] = el.dataset[attribute];
